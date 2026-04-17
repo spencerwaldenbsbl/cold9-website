@@ -1382,6 +1382,358 @@
       }
     }
 
+    /* ── COMPREHENSIVE MOBILE FIXES (768px) ────────── */
+    @media (max-width: 768px) {
+      /* NAV */
+      .nav {
+        padding: 1.6rem 2rem;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+      }
+      .nav-wordmark {
+        font-size: 5rem;
+      }
+      .nav-sub {
+        font-size: 1.1rem;
+        margin-top: 0.4rem;
+      }
+      .nav-right {
+        gap: 1.6rem;
+        flex-wrap: wrap;
+        padding-top: 0.4rem;
+      }
+      .nav-links {
+        gap: 2rem;
+      }
+      .nav-links a {
+        font-size: 1.15rem;
+      }
+      .nav-apps {
+        gap: 0.5rem;
+      }
+
+      /* HERO */
+      .hero {
+        height: auto;
+        min-height: 70vh;
+        margin-top: -100px;
+        padding-top: 100px;
+      }
+      .hero-center {
+        position: relative;
+        padding: 6rem 2rem 5rem;
+        gap: 2rem;
+      }
+      .hero-big-title {
+        font-size: clamp(3.6rem, 10vw, 5.6rem);
+      }
+      .hero-sub-tag {
+        font-size: 1rem;
+        letter-spacing: 0.06em;
+      }
+      .hero-btns {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .btn-dark,
+      .btn-light-outline {
+        padding: 1rem 2rem;
+        font-size: 1.15rem;
+      }
+
+      /* MISSION */
+      .mission {
+        grid-template-columns: 1fr;
+        gap: 3.6rem;
+        padding: 5rem 2rem;
+      }
+      .mission-quote {
+        font-size: 2rem;
+      }
+      .mission-features {
+        grid-template-columns: 1fr;
+        gap: 2.4rem;
+      }
+
+      /* PANELS */
+      .panels {
+        grid-template-columns: 1fr;
+        padding: 2rem 2rem;
+        gap: 1.2rem;
+      }
+      .panel {
+        height: 36rem;
+        padding: 2.4rem;
+      }
+      .panel-title {
+        font-size: 2rem;
+      }
+      .panel-heading {
+        font-size: 2.2rem;
+      }
+      .panel-sub {
+        margin-bottom: 2rem;
+      }
+
+      /* SIZES */
+      .sizes {
+        padding: 5rem 2rem;
+      }
+      .sizes h2 {
+        font-size: 2.8rem;
+        margin-bottom: 3rem;
+      }
+      .sizes-inner {
+        grid-template-columns: 1fr;
+        gap: 3.2rem;
+      }
+      .sizes-photo-div {
+        aspect-ratio: 3/2;
+      }
+
+      /* EXPERIENCE */
+      .experience {
+        padding: 5rem 2rem;
+      }
+      .experience-intro {
+        margin-bottom: 4rem;
+      }
+      .exp-grid {
+        grid-template-columns: 1fr;
+      }
+      .exp-card {
+        padding: 2.4rem;
+      }
+
+      /* PRICING */
+      .pricing {
+        padding: 6rem 2rem;
+      }
+      .pricing-heading {
+        font-size: 3.6rem;
+      }
+      .pricing-card {
+        max-width: 100%;
+        padding: 2.4rem;
+      }
+      .pricing-amount {
+        font-size: 5.2rem;
+      }
+      .pricing-old {
+        font-size: 2.6rem;
+      }
+      .pricing-desc {
+        font-size: 1.4rem;
+      }
+
+      /* GALLERY */
+      .gallery {
+        height: 36rem;
+      }
+      .gallery .gallery-cta {
+        top: 1.6rem;
+        right: 2rem;
+        font-size: 1rem;
+        padding: 0.7rem 1.4rem;
+      }
+      .gallery-counter {
+        bottom: 1.6rem;
+        right: 2rem;
+        font-size: 1.1rem;
+      }
+
+      /* PREORDER CTA */
+      .preorder-cta {
+        padding: 6rem 2rem;
+      }
+      .preorder-cta h2 {
+        font-size: clamp(4rem, 12vw, 7.2rem);
+        margin-bottom: 3.6rem;
+      }
+
+      /* FOOTER */
+      footer {
+        padding: 4rem 2rem 2rem;
+      }
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.8rem;
+        padding-bottom: 3.2rem;
+      }
+      .footer-brand-logo {
+        font-size: 3.2rem;
+      }
+
+      /* CINEMATIC FOOTER */
+      .cinematic-wrapper {
+        height: 80vh;
+      }
+      .cinematic-footer {
+        height: 80vh;
+      }
+      .cinematic-giant {
+        font-size: 40vw;
+      }
+      .cinematic-heading {
+        font-size: clamp(2.8rem, 7vw, 4rem);
+        margin-bottom: 2.4rem;
+      }
+      .cinematic-pills {
+        gap: 1.2rem;
+      }
+      .cinematic-pills-row {
+        gap: 0.8rem;
+      }
+      .pill-primary {
+        padding: 1.1rem 2rem;
+        font-size: 1rem;
+      }
+      .pill-secondary {
+        padding: 0.7rem 1.4rem;
+        font-size: 1rem;
+      }
+      .cinematic-center {
+        margin-top: 4rem;
+        padding: 0 1.6rem;
+      }
+      .cinematic-marquee {
+        top: 8rem;
+      }
+      .cinematic-bottom {
+        flex-direction: column;
+        padding: 0 2rem 2rem;
+        gap: 1.2rem;
+      }
+      .cinematic-credit {
+        font-size: 0.85rem;
+      }
+      .cinematic-badge .label,
+      .cinematic-badge .brand {
+        font-size: 0.85rem;
+      }
+
+      /* CART DROPDOWN */
+      .nav-cart-dropdown {
+        width: calc(100vw - 3rem);
+        right: -1rem;
+        max-height: 65vh;
+      }
+    }
+
+    /* ── EXTRA SMALL SCREENS (480px) ─────────────────── */
+    @media (max-width: 480px) {
+      .nav {
+        padding: 1.2rem 1.6rem;
+      }
+      .nav-wordmark {
+        font-size: 3.6rem;
+      }
+      .nav-sub {
+        font-size: 1rem;
+      }
+      .nav-apps {
+        display: none;
+      }
+      .nav-right {
+        gap: 1.2rem;
+      }
+      .nav-links {
+        gap: 1.4rem;
+      }
+      .nav-links a {
+        font-size: 1.05rem;
+      }
+
+      .hero-big-title {
+        font-size: clamp(2.8rem, 9vw, 3.6rem);
+      }
+      .hero-sub-tag {
+        font-size: 0.9rem;
+      }
+      .hero-btns {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 28rem;
+        margin: 0 auto;
+      }
+      .btn-dark,
+      .btn-light-outline {
+        text-align: center;
+        padding: 1.1rem 1.6rem;
+        font-size: 1.1rem;
+      }
+
+      .panel {
+        height: 30rem;
+        padding: 2rem;
+      }
+      .panel-title {
+        font-size: 1.8rem;
+      }
+
+      .mission-quote {
+        font-size: 1.8rem;
+      }
+
+      .sizes h2 {
+        font-size: 2.4rem;
+      }
+      .size-item {
+        padding: 2rem 2.2rem;
+      }
+      .size-name {
+        font-size: 1.7rem;
+      }
+
+      .pricing-heading {
+        font-size: 2.8rem;
+      }
+      .pricing-amount {
+        font-size: 4.4rem;
+      }
+      .pricing-old {
+        font-size: 2.2rem;
+      }
+
+      .preorder-cta h2 {
+        font-size: clamp(3.2rem, 10vw, 4rem);
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2.4rem;
+      }
+
+      .cinematic-giant {
+        font-size: 50vw;
+      }
+      .cinematic-heading {
+        font-size: clamp(2.4rem, 6vw, 3rem);
+      }
+      .cinematic-wrapper {
+        height: 70vh;
+      }
+      .cinematic-footer {
+        height: 70vh;
+      }
+
+      .nav-cart-dropdown {
+        width: calc(100vw - 2rem);
+        right: -0.5rem;
+      }
+      .nav-cart-dd-item {
+        grid-template-columns: 4rem 1fr auto;
+        gap: 1rem;
+        padding: 0.8rem 1.4rem;
+      }
+      .nav-cart-dd-img {
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+
   </style>
 </head>
 <body>
