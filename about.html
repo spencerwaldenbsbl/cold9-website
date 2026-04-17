@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Cold9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0F;
+      color: #E0E0E0;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .about-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .about-nav .logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    .about-nav .logo .nine { color: #06B6D4; }
+    .about-nav .logo sup { font-size: 0.45em; color: rgba(255,255,255,0.4); vertical-align: super; font-weight: 700; }
+    .about-nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .about-nav a.back {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .about-nav a.back:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .about-nav a.nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px -8px rgba(37,99,235,0.45);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .about-nav a.nav-cta:hover { transform: translateY(-2px); }
+    .nav-cart-link:hover { border-color: #06B6D4 !important; color: #06B6D4 !important; }
+    .nav-cart-link span:empty { display: none; }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .about-hero {
+      position: relative;
+      min-height: 78vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16rem 2.4rem 10rem;
+      overflow: hidden;
+      background: #0A0A0F;
+    }
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      inset: -20% -10% auto auto;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, rgba(6,182,212,0.2) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .about-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto auto -20% -10%;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, rgba(37,99,235,0.2) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-size: 60px 60px;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 92rem;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.14), rgba(37,99,235,0.14));
+      border: 1px solid rgba(6,182,212,0.35);
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero-content h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(4rem, 8vw, 9rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 2.4rem;
+      padding-bottom: 0.15em;
+    }
+    .hero-content h1 .accent {
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .hero-content p {
+      font-size: 1.8rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 60rem;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── BLOCKS ───────────────────────────────────── */
+    .about-block {
+      position: relative;
+      padding: 10rem 5.6rem;
+      overflow: hidden;
+    }
+    .about-block.dark { background: #080812; }
+    .block-inner {
+      max-width: 96rem;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .block-inner.center { text-align: center; }
+    .block-inner.wide { max-width: 120rem; }
+    .block-label {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #06B6D4;
+      margin-bottom: 1.6rem;
+    }
+    .about-block h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(3.2rem, 5.5vw, 5.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      color: #fff;
+      margin-bottom: 3.2rem;
+      padding-bottom: 0.12em;
+    }
+    .about-block h2 .accent {
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .about-block p {
+      font-size: 1.6rem;
+      color: #C0C0C0;
+      line-height: 1.7;
+    }
+    .block-lead {
+      max-width: 62rem;
+      margin: 0 auto 4rem;
+      font-size: 1.7rem !important;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 1.6rem;
+    }
+    .two-col p { font-size: 1.55rem; }
+
+    /* Problem block: team photo bg */
+    .problem-block {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+    }
+    .problem-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .problem-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to right, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.82) 50%, rgba(10,10,15,0.72) 100%),
+        linear-gradient(to bottom, rgba(10,10,15,0.5) 0%, rgba(10,10,15,0.85) 100%);
+    }
+
+    /* Solution block: two-column split */
+    .block-split {
+      max-width: 120rem;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .split-text { max-width: 52rem; }
+    .split-text p { font-size: 1.6rem; }
+    .spec-list {
+      list-style: none;
+      margin-top: 3rem;
+    }
+    .spec-list li {
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      font-size: 1.45rem;
+      color: #C0C0C0;
+      line-height: 1.6;
+      display: flex;
+      gap: 1.6rem;
+      align-items: baseline;
+    }
+    .spec-list li:last-child { border-bottom: none; }
+    .spec-list .spec-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #06B6D4;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      min-width: 14rem;
+    }
+    .split-image .image-wrap {
+      background: #ECECEC;
+      border-radius: 24px;
+      padding: 3rem;
+      aspect-ratio: 3/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 40px 80px -30px rgba(6,182,212,0.3),
+        0 20px 40px -20px rgba(0,0,0,0.6);
+    }
+    .split-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Founders grid */
+    .founders-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.4rem;
+      margin-top: 5rem;
+    }
+    .founder-card {
+      background: #131322;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 3.2rem 2.8rem;
+      text-align: center;
+      transition:
+        transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 300ms ease;
+    }
+    .founder-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(6,182,212,0.4);
+      box-shadow:
+        0 32px 60px -20px rgba(6,182,212,0.3),
+        0 18px 36px -18px rgba(37,99,235,0.2);
+    }
+    .founder-avatar {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 2.4rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #06B6D4 0%, #2563EB 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+      box-shadow:
+        0 10px 30px -8px rgba(6,182,212,0.55),
+        inset 0 2px 4px rgba(255,255,255,0.15);
+    }
+    .founder-card h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.02em;
+    }
+    .founder-role {
+      display: block;
+      font-size: 1.1rem;
+      color: #06B6D4;
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .founder-role:not(:last-child) { margin-bottom: 1.6rem; }
+    .founder-card p {
+      font-size: 1.35rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.6;
+    }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.4rem;
+      max-width: 88rem;
+      margin: 0 auto;
+    }
+    .stat {
+      background: linear-gradient(145deg, #131322 0%, #0F0F18 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 3.6rem 2rem;
+      text-align: center;
+      transition: border-color 300ms ease;
+    }
+    .stat:hover { border-color: rgba(6,182,212,0.3); }
+    .stat-value {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(4rem, 5vw, 5.6rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.1em;
+    }
+    .stat-value sup {
+      font-size: 0.4em;
+      letter-spacing: 0.04em;
+      margin-left: 0.1em;
+      vertical-align: super;
+    }
+    .stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .block-footnote {
+      margin-top: 4rem;
+      font-size: 1.25rem !important;
+      color: rgba(255,255,255,0.45) !important;
+      letter-spacing: 0.04em;
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    /* New Venture Expo photo */
+    .nve-photo {
+      max-width: 72rem;
+      margin: 0 auto 5rem;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 40px 80px -30px rgba(6,182,212,0.3),
+        0 20px 40px -20px rgba(0,0,0,0.6);
+    }
+    .nve-photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .nve-caption {
+      display: block;
+      margin-top: 1.2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* Mission block */
+    .mission-block {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      padding: 12rem 5.6rem;
+      overflow: hidden;
+    }
+    .mission-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .mission-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to bottom, rgba(10,10,15,0.55) 0%, rgba(10,10,15,0.92) 100%),
+        radial-gradient(ellipse at 30% 50%, rgba(6,182,212,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 50%, rgba(37,99,235,0.14) 0%, transparent 60%);
+    }
+    .cta-btn {
+      display: inline-block;
+      margin-top: 2.8rem;
+      padding: 1.5rem 3.2rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 9999px;
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s;
+      box-shadow: 0 12px 32px -10px rgba(37,99,235,0.6);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px -10px rgba(37,99,235,0.75);
+    }
+
+    /* Footer */
+    .about-footer {
+      background: #050508;
+      padding: 3.2rem 5.6rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .about-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 120rem;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.1rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-footer-inner .logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    .about-footer-inner .logo .nine { color: #06B6D4; }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.delay-1 { transition-delay: 80ms; }
+    .reveal.delay-2 { transition-delay: 160ms; }
+    .reveal.delay-3 { transition-delay: 240ms; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .about-nav { padding: 1.6rem 2.4rem; }
+      .about-nav-links { gap: 1rem; }
+      .about-block { padding: 7rem 2.4rem; }
+      .block-split { grid-template-columns: 1fr; gap: 4rem; }
+      .founders-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; gap: 2rem; }
+      .mission-block { padding: 8rem 2.4rem; }
+      .spec-list li { flex-direction: column; gap: 0.4rem; }
+      .spec-list .spec-tag { min-width: 0; }
+      .about-footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ────────────────────────────────────────── -->
+  <nav class="about-nav" aria-label="Primary">
+    <a href="index.html" class="logo">Cold<span class="nine">9</span><sup>&reg;</sup></a>
+    <div class="about-nav-links">
+      <a href="index.html" class="back">&larr; Home</a>
+      <a href="products.html" class="nav-cta">Pre-order</a>
+      <a href="cart.html" class="nav-cart-link" aria-label="Shopping cart" style="position:relative;width:3.4rem;height:3.4rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;transition:border-color 0.2s,color 0.2s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <span id="nav-cart-badge" style="position:absolute;top:-5px;right:-5px;min-width:1.6rem;height:1.6rem;border-radius:9999px;background:linear-gradient(135deg,#06B6D4,#2563EB);color:#fff;font-family:'Space Mono',monospace;font-size:0.9rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 0.4rem;box-shadow:0 3px 8px rgba(6,182,212,0.5)"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────── -->
+  <header class="about-hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow reveal">About Cold9</span>
+      <h1 class="reveal delay-1">Built by players<br>who <span class="accent">froze on the field</span>.</h1>
+      <p class="reveal delay-2">Three college athletes. One shared problem. The first-ever baseball pant with integrated thermal insulation.</p>
+    </div>
+  </header>
+
+  <!-- ── BLOCK 1 · THE VALIDATION ───────────────────── -->
+  <section class="about-block dark" aria-labelledby="validation-h">
+    <div class="block-inner center">
+      <span class="block-label reveal">01 &middot; The Validation</span>
+      <h2 class="reveal delay-1" id="validation-h"><span class="accent">Award-Winning</span><br>Innovation.</h2>
+      <p class="block-lead reveal delay-2">Cold9 took 1st Place in the Prototype Category at the University of Tampa&rsquo;s New Venture Expo &mdash; earning $3,000 toward bringing the product to market.</p>
+      <figure class="nve-photo reveal delay-3">
+        <img src="nve-team.jpg" alt="Cold9 co-founders Sam Levine, Spencer Walden, and Joshua Greenspon at their 1st Place prototype booth at the University of Tampa New Venture Expo" loading="lazy">
+      </figure>
+      <div class="stats-grid">
+        <div class="stat reveal">
+          <div class="stat-value" data-count-to="1" data-suffix="<sup>ST</sup>">1<sup>ST</sup></div>
+          <div class="stat-label">Place &middot; Prototype Category</div>
+        </div>
+        <div class="stat reveal delay-1">
+          <div class="stat-value" data-count-to="3">3</div>
+          <div class="stat-label">Co-Founders</div>
+        </div>
+        <div class="stat reveal delay-2">
+          <div class="stat-value" data-count-to="3000" data-prefix="$" data-commas="true">$3,000</div>
+          <div class="stat-label">Award Funding</div>
+        </div>
+      </div>
+      <p class="block-footnote reveal delay-3">New Venture Expo &middot; University of Tampa Entrepreneurship Center &middot; Mentored by Bert Seither</p>
+    </div>
+  </section>
+
+  <!-- ── BLOCK 2 · THE PROBLEM ──────────────────────── -->
+  <section class="about-block problem-block" aria-labelledby="problem-h">
+    <img class="problem-bg" src="cold9-team-together.png" alt="">
+    <div class="problem-scrim" aria-hidden="true"></div>
+    <div class="block-inner">
+      <span class="block-label reveal">02 &middot; The Problem</span>
+      <h2 class="reveal delay-1" id="problem-h">We Felt the <span class="accent">Cold</span>.<br>So We Fixed It.</h2>
+      <div class="two-col">
+        <p class="reveal delay-2">Every baseball player has been there &mdash; shivering through an early-spring opener, a late-fall doubleheader, a winter showcase where your breath fogs the lineup card and your fingers go numb on the grip.</p>
+        <p class="reveal delay-3">And the &ldquo;solutions&rdquo; suck: thermal underwear that bunches up and kills your range of motion, bulky compression layers that look unprofessional under the uniform, or the classic &mdash; grit your teeth and freeze.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BLOCK 3 · THE SOLUTION ─────────────────────── -->
+  <section class="about-block dark" aria-labelledby="solution-h">
+    <div class="block-split">
+      <div class="split-text">
+        <span class="block-label reveal">03 &middot; The Solution</span>
+        <h2 class="reveal delay-1" id="solution-h">One Pant.<br><span class="accent">Zero Layers.</span></h2>
+        <p class="reveal delay-2">Cold9 is the <strong style="color:#fff">first-ever</strong> baseball pant engineered with an integrated thermal lining. No extra layers. No bulk. Just one pant that keeps you warm and lets you play at your best.</p>
+        <ul class="spec-list reveal delay-3">
+          <li><span class="spec-tag">Outer Shell</span><span>Pro-grade 100% polyester</span></li>
+          <li><span class="spec-tag">Inner Liner</span><span>Soft double-brushed fleece</span></li>
+          <li><span class="spec-tag">Impact Zones</span><span>Nylon-spandex barrier at knees and seat for slide protection</span></li>
+          <li><span class="spec-tag">Fit</span><span>Indistinguishable from a premium baseball pant &mdash; the insulation is invisible from the outside</span></li>
+        </ul>
+      </div>
+      <div class="split-image reveal delay-2">
+        <div class="image-wrap">
+          <img src="cold9-white-pants-c9-logo.png" alt="Cold9 baseball pant with integrated thermal lining">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BLOCK 4 · THE FOUNDERS ─────────────────────── -->
+  <section class="about-block" aria-labelledby="founders-h">
+    <div class="block-inner center wide">
+      <span class="block-label reveal">04 &middot; The Founders</span>
+      <h2 class="reveal delay-1" id="founders-h">Built By Players,<br>For Players.</h2>
+      <p class="block-lead reveal delay-2">Three University of Tampa athletes who lived the problem &mdash; and built the fix.</p>
+      <div class="founders-grid">
+        <article class="founder-card reveal">
+          <div class="founder-avatar" aria-hidden="true">SL</div>
+          <h3>Sam Levine</h3>
+          <span class="founder-role">Co-Founder</span>
+        </article>
+        <article class="founder-card reveal delay-1">
+          <div class="founder-avatar" aria-hidden="true">SW</div>
+          <h3>Spencer Walden</h3>
+          <span class="founder-role">Co-Founder</span>
+        </article>
+        <article class="founder-card reveal delay-2">
+          <div class="founder-avatar" aria-hidden="true">JG</div>
+          <h3>Joshua Greenspon</h3>
+          <span class="founder-role">Co-Founder</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BLOCK 5 · THE MISSION ──────────────────────── -->
+  <section class="about-block mission-block" aria-labelledby="mission-h">
+    <img class="mission-bg" src="cold9-field-hero-bg.png" alt="">
+    <div class="mission-scrim" aria-hidden="true"></div>
+    <div class="block-inner center" style="position:relative; z-index:2;">
+      <span class="block-label reveal">05 &middot; The Mission</span>
+      <h2 class="reveal delay-1" id="mission-h">Play Your Best<br>In <span class="accent">Any Weather</span>.</h2>
+      <p class="block-lead reveal delay-2">No athlete should have to choose between staying warm and playing at their best. We&rsquo;re starting with baseball and softball &mdash; and this is just the beginning.</p>
+      <a href="products.html" class="cta-btn reveal delay-3">Pre-order your pair</a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="about-footer">
+    <div class="about-footer-inner">
+      <a href="index.html" class="logo">Cold<span class="nine">9</span>&reg;</a>
+      <span>&copy; 2026 Cold9 Athletics &middot; Never Freeze Again&trade;</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Scroll reveal
+      var reveals = document.querySelectorAll('.reveal');
+      if (reduced) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      } else if ('IntersectionObserver' in window) {
+        var revealIO = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealIO.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (el) { revealIO.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      }
+
+      // Counter animation
+      var counters = document.querySelectorAll('[data-count-to]');
+      if (counters.length) {
+        if (reduced || !('IntersectionObserver' in window)) {
+          counters.forEach(function (el) { renderCounter(el, parseInt(el.getAttribute('data-count-to'), 10)); });
+        } else {
+          var countIO = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                countIO.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.5 });
+          counters.forEach(function (el) { countIO.observe(el); });
+        }
+      }
+
+      function renderCounter(el, value) {
+        var prefix = el.getAttribute('data-prefix') || '';
+        var suffix = el.getAttribute('data-suffix') || '';
+        var useCommas = el.getAttribute('data-commas') === 'true';
+        var formatted = useCommas ? value.toLocaleString('en-US') : String(value);
+        el.innerHTML = prefix + formatted + suffix;
+      }
+
+      function animateCounter(el) {
+        var target = parseInt(el.getAttribute('data-count-to'), 10);
+        var duration = 1400;
+        var start = performance.now();
+        function tick(now) {
+          var p = Math.min(1, (now - start) / duration);
+          var eased = 1 - Math.pow(1 - p, 3);
+          renderCounter(el, Math.round(target * eased));
+          if (p < 1) requestAnimationFrame(tick);
+          else renderCounter(el, target);
+        }
+        requestAnimationFrame(tick);
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var badge = document.getElementById('nav-cart-badge');
+      if (!badge) return;
+      try {
+        var cart = JSON.parse(localStorage.getItem('cold9_cart') || '[]');
+        var count = cart.reduce(function (s, i) { return s + (i.qty || 1); }, 0);
+        badge.textContent = count > 0 ? count : '';
+      } catch (e) { badge.textContent = ''; }
+    })();
+  </script>
+
+</body>
+</html>

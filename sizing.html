@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sizing Guide — Cold9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0F;
+      color: #E0E0E0;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .about-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .about-nav .logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    .about-nav .logo .nine { color: #06B6D4; }
+    .about-nav .logo sup { font-size: 0.45em; color: rgba(255,255,255,0.4); vertical-align: super; font-weight: 700; }
+    .about-nav-links { display: flex; gap: 2rem; align-items: center; }
+    .about-nav a.back {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .about-nav a.back:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .about-nav a.nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px -8px rgba(37,99,235,0.45);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .about-nav a.nav-cta:hover { transform: translateY(-2px); }
+    .nav-cart-link:hover { border-color: #06B6D4 !important; color: #06B6D4 !important; }
+    .nav-cart-link span:empty { display: none; }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .about-hero {
+      position: relative;
+      min-height: 46vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16rem 2.4rem 6rem;
+      overflow: hidden;
+      background: #0A0A0F;
+    }
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      inset: -20% -10% auto auto;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, rgba(6,182,212,0.2) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .about-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto auto -20% -10%;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, rgba(37,99,235,0.2) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-size: 60px 60px;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 80rem; }
+    .eyebrow {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.14), rgba(37,99,235,0.14));
+      border: 1px solid rgba(6,182,212,0.35);
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero-content h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(4rem, 8vw, 8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 2rem;
+      padding-bottom: 0.15em;
+    }
+    .hero-content h1 .accent {
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .hero-content p {
+      font-size: 1.7rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 56rem;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── CHART SECTION ────────────────────────────── */
+    .chart-section {
+      position: relative;
+      padding: 6rem 5.6rem 10rem;
+      background: #080812;
+    }
+    .chart-inner { max-width: 96rem; margin: 0 auto; }
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .group-card {
+      background: linear-gradient(145deg, #131322 0%, #0F0F18 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 3.2rem;
+      box-shadow:
+        0 40px 80px -30px rgba(6,182,212,0.18),
+        0 20px 40px -20px rgba(0,0,0,0.6);
+    }
+    .group-card .label {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #06B6D4;
+      margin-bottom: 1.4rem;
+    }
+    .group-card h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 2.4rem;
+    }
+
+    /* Size chart — same visual format as preorder */
+    .size-chart { display: flex; flex-direction: column; gap: 0.2rem; }
+    .sc-head, .sc-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 130px;
+      align-items: center;
+      gap: 1.6rem;
+      padding: 1.2rem 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 1.35rem;
+    }
+    .sc-head {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
+    }
+    .sc-row { transition: background 0.2s ease; border-radius: 6px; }
+    .sc-row:hover { background: rgba(6,182,212,0.05); }
+    .sc-row:last-child { border-bottom: none; }
+    .sc-size {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      color: #06B6D4;
+      letter-spacing: -0.01em;
+      font-size: 1.45rem;
+    }
+    .sc-name { color: rgba(255,255,255,0.85); font-weight: 500; }
+    .sc-waist {
+      font-family: 'Space Mono', monospace;
+      color: #fff;
+      font-weight: 700;
+      text-align: right;
+      font-size: 1.3rem;
+      letter-spacing: 0.02em;
+    }
+
+    /* Tip strip */
+    .tip-strip {
+      margin-top: 4rem;
+      padding: 2.4rem 2.8rem;
+      background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(37,99,235,0.08));
+      border: 1px solid rgba(6,182,212,0.25);
+      border-radius: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.8rem;
+    }
+    .tip-strip .icon {
+      width: 4rem; height: 4rem;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #06B6D4, #2563EB);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 10px 24px -8px rgba(6,182,212,0.5);
+    }
+    .tip-strip h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+    .tip-strip p {
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    /* CTA strip below chart */
+    .cta-strip {
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .cta-strip a {
+      display: inline-block;
+      padding: 1.5rem 3.2rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 9999px;
+      box-shadow: 0 12px 32px -10px rgba(37,99,235,0.55);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s;
+    }
+    .cta-strip a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px -10px rgba(37,99,235,0.75);
+    }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .about-footer {
+      background: #050508;
+      padding: 3.2rem 5.6rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .about-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 120rem;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.1rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-footer-inner .logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    .about-footer-inner .logo .nine { color: #06B6D4; }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: 80ms; }
+    .reveal.delay-2 { transition-delay: 160ms; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .chart-grid { grid-template-columns: 1fr; gap: 2.4rem; }
+      .group-card { padding: 2.4rem; }
+      .sc-head, .sc-row { grid-template-columns: 70px 1fr 100px; gap: 1rem; font-size: 1.25rem; }
+    }
+    @media (max-width: 700px) {
+      .about-nav { padding: 1.6rem 2.4rem; }
+      .about-nav-links { gap: 1rem; }
+      .chart-section { padding: 4rem 2.4rem 7rem; }
+      .about-footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ────────────────────────────────────────── -->
+  <nav class="about-nav" aria-label="Primary">
+    <a href="index.html" class="logo">Cold<span class="nine">9</span><sup>&reg;</sup></a>
+    <div class="about-nav-links">
+      <a href="index.html" class="back">&larr; Home</a>
+      <a href="products.html" class="nav-cta">Pre-order</a>
+      <a href="cart.html" class="nav-cart-link" aria-label="Shopping cart" style="position:relative;width:3.4rem;height:3.4rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;transition:border-color 0.2s,color 0.2s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <span id="nav-cart-badge" style="position:absolute;top:-5px;right:-5px;min-width:1.6rem;height:1.6rem;border-radius:9999px;background:linear-gradient(135deg,#06B6D4,#2563EB);color:#fff;font-family:'Space Mono',monospace;font-size:0.9rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 0.4rem;box-shadow:0 3px 8px rgba(6,182,212,0.5)"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────── -->
+  <header class="about-hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow reveal">Sizing Guide</span>
+      <h1 class="reveal delay-1">Find Your <span class="accent">Fit</span>.</h1>
+      <p class="reveal delay-2">Cold9 sizing matches standard baseball pant fit. Measure your waist with a soft tape and round up if you&rsquo;re between sizes.</p>
+    </div>
+  </header>
+
+  <!-- ── CHART ──────────────────────────────────────── -->
+  <section class="chart-section" aria-labelledby="chart-h">
+    <div class="chart-inner">
+      <div class="chart-grid">
+
+        <!-- Youth -->
+        <div class="group-card reveal">
+          <span class="label">Youth</span>
+          <h2 id="chart-h">Youth Sizes</h2>
+          <div class="size-chart">
+            <div class="sc-head">
+              <span>Size</span>
+              <span>Name</span>
+              <span style="text-align:right">Waist</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">YS</span>
+              <span class="sc-name">Youth Small</span>
+              <span class="sc-waist">20&ndash;22&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">YM</span>
+              <span class="sc-name">Youth Medium</span>
+              <span class="sc-waist">22&ndash;24&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">YL</span>
+              <span class="sc-name">Youth Large</span>
+              <span class="sc-waist">24&ndash;26&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">YXL</span>
+              <span class="sc-name">Youth X-Large</span>
+              <span class="sc-waist">26&ndash;28&Prime;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Adult -->
+        <div class="group-card reveal delay-1">
+          <span class="label">Adult</span>
+          <h2>Adult Sizes</h2>
+          <div class="size-chart">
+            <div class="sc-head">
+              <span>Size</span>
+              <span>Name</span>
+              <span style="text-align:right">Waist</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">S</span>
+              <span class="sc-name">Small</span>
+              <span class="sc-waist">28&ndash;30&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">M</span>
+              <span class="sc-name">Medium</span>
+              <span class="sc-waist">30&ndash;32&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">L</span>
+              <span class="sc-name">Large</span>
+              <span class="sc-waist">32&ndash;34&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">XL</span>
+              <span class="sc-name">X-Large</span>
+              <span class="sc-waist">34&ndash;36&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">2XL</span>
+              <span class="sc-name">XX-Large</span>
+              <span class="sc-waist">36&ndash;38&Prime;</span>
+            </div>
+            <div class="sc-row">
+              <span class="sc-size">3XL</span>
+              <span class="sc-name">3X-Large</span>
+              <span class="sc-waist">38&ndash;40&Prime;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip -->
+      <div class="tip-strip reveal delay-2">
+        <div class="icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Between Sizes?</h3>
+          <p>Cold9 pants are built with athletic stretch, but the thermal liner adds a slight interior layer. If you&rsquo;re between sizes, we recommend going up &mdash; especially if you&rsquo;re layering compression underneath.</p>
+        </div>
+      </div>
+
+      <div class="cta-strip">
+        <a href="products.html">Ready? Pre-order &mdash; $65</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="about-footer">
+    <div class="about-footer-inner">
+      <a href="index.html" class="logo">Cold<span class="nine">9</span>&reg;</a>
+      <span>&copy; 2026 Cold9 Athletics &middot; Never Freeze Again&trade;</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var reveals = document.querySelectorAll('.reveal');
+      if (reduced) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      } else if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var badge = document.getElementById('nav-cart-badge');
+      if (!badge) return;
+      try {
+        var cart = JSON.parse(localStorage.getItem('cold9_cart') || '[]');
+        var count = cart.reduce(function (s, i) { return s + (i.qty || 1); }, 0);
+        badge.textContent = count > 0 ? count : '';
+      } catch (e) { badge.textContent = ''; }
+    })();
+  </script>
+
+</body>
+</html>

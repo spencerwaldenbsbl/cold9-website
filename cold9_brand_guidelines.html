@@ -1,0 +1,183 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+.wrap{background:#000;color:#fff;font-family:'Inter',sans-serif;padding:32px;border-radius:16px}
+.top-bar{height:3px;background:linear-gradient(90deg,#06B6D4,#2563EB,#06B6D4);border-radius:2px;margin-bottom:28px}
+.brand-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid rgba(6,182,212,0.2)}
+.logo-area{display:flex;align-items:center;gap:12px}
+.logo-ico{width:48px;height:48px;border-radius:50%;border:2px solid #06B6D4;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:14px;color:#000}
+.logo-txt{font-family:'Space Mono',monospace;font-weight:700;font-size:22px;background:linear-gradient(90deg,#06B6D4,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-sub{font-size:10px;color:#9CA3AF;letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
+.brand-tag{font-size:11px;color:#9CA3AF;letter-spacing:.12em;text-transform:uppercase;font-family:'Space Mono',monospace}
+.section{margin-bottom:28px}
+.sec-label{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#06B6D4;font-family:'Space Mono',monospace;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:1px;background:rgba(6,182,212,0.2)}
+.color-row{display:flex;gap:10px;flex-wrap:wrap}
+.swatch{border-radius:10px;overflow:hidden;flex:1;min-width:80px}
+.swatch-color{height:52px}
+.swatch-info{padding:8px 10px;background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.07);border-top:none;border-radius:0 0 10px 10px}
+.swatch-name{font-size:11px;font-weight:500;color:#fff;margin-bottom:2px}
+.swatch-hex{font-size:10px;color:#9CA3AF;font-family:'Space Mono',monospace}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.type-item{background:rgba(15,23,42,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px 16px}
+.type-label{font-size:10px;color:#9CA3AF;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.type-sample-h{font-family:'Space Mono',monospace;font-weight:700;font-size:20px;color:#fff;line-height:1.2}
+.type-sample-b{font-family:'Inter',sans-serif;font-size:14px;color:#D1D5DB;line-height:1.6;margin-top:4px}
+.type-meta{font-size:11px;color:#4B5563;margin-top:6px;font-family:'Space Mono',monospace}
+.voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.voice-card{background:rgba(15,23,42,0.5);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 14px}
+.voice-label{font-size:10px;color:#9CA3AF;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.voice-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag-do{background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);color:#4ade80;font-size:11px;padding:3px 10px;border-radius:99px}
+.tag-dont{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#f87171;font-size:11px;padding:3px 10px;border-radius:99px}
+.grad-bar{height:36px;border-radius:10px;background:linear-gradient(90deg,#06B6D4,#2563EB);display:flex;align-items:center;padding:0 14px;justify-content:space-between;margin-bottom:8px}
+.grad-bar span{font-size:11px;font-family:'Space Mono',monospace;color:#fff}
+.tagline-block{background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:14px 18px;text-align:center;margin-bottom:10px}
+.tagline-main{font-family:'Space Mono',monospace;font-weight:700;font-size:16px;background:linear-gradient(90deg,#06B6D4,#60A5FA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tagline-sub{font-size:11px;color:#9CA3AF;margin-top:4px;letter-spacing:.06em}
+.bottom-bar{height:3px;background:linear-gradient(90deg,#06B6D4,#2563EB,#06B6D4);border-radius:2px;margin-top:28px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+</style>
+
+<div class="wrap">
+  <div class="top-bar"></div>
+
+  <div class="brand-header">
+    <div class="logo-area">
+      <div class="logo-ico">C9</div>
+      <div>
+        <div class="logo-txt">COLD9</div>
+        <div class="logo-sub">Insulated Baseball Pants</div>
+      </div>
+    </div>
+    <div class="brand-tag">Brand Guidelines v1.0</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Tagline</div>
+    <div class="tagline-block">
+      <div class="tagline-main">Never Freeze Again™</div>
+      <div class="tagline-sub">Always paired with the wordmark. Never altered.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Color palette</div>
+    <div class="color-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#000000"></div>
+        <div class="swatch-info"><div class="swatch-name">Deep Black</div><div class="swatch-hex">#000000</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#00B4D8"></div>
+        <div class="swatch-info"><div class="swatch-name">Ice Blue</div><div class="swatch-hex">#00B4D8</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#06B6D4"></div>
+        <div class="swatch-info"><div class="swatch-name">Cyan</div><div class="swatch-hex">#06B6D4</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2563EB"></div>
+        <div class="swatch-info"><div class="swatch-name">Electric Blue</div><div class="swatch-hex">#2563EB</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0F172A"></div>
+        <div class="swatch-info"><div class="swatch-name">Slate</div><div class="swatch-hex">#0F172A</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Primary gradient</div>
+    <div class="grad-bar">
+      <span>#06B6D4 Cyan</span>
+      <span>→</span>
+      <span>#2563EB Blue</span>
+    </div>
+    <div style="font-size:11px;color:#4B5563;font-family:'Space Mono',monospace">Used on: buttons, badges, logo mark, accent bars, score fills</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Typography</div>
+    <div class="type-grid">
+      <div class="type-item">
+        <div class="type-label">Headings</div>
+        <div class="type-sample-h">Space Mono</div>
+        <div class="type-meta">700 weight · −0.02em tracking</div>
+      </div>
+      <div class="type-item">
+        <div class="type-label">Body</div>
+        <div class="type-sample-b">Inter — clean, modern, readable at any size for UI and copy.</div>
+        <div class="type-meta">300–900 weight · 1.65 line height</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Brand voice</div>
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="voice-label">We are</div>
+        <div class="voice-tags">
+          <span class="tag-do">Bold</span>
+          <span class="tag-do">Direct</span>
+          <span class="tag-do">Technical</span>
+          <span class="tag-do">Confident</span>
+          <span class="tag-do">Athletic</span>
+        </div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-label">We are not</div>
+        <div class="voice-tags">
+          <span class="tag-dont">Fluffy</span>
+          <span class="tag-dont">Corporate</span>
+          <span class="tag-dont">Casual</span>
+          <span class="tag-dont">Vague</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Product colors</div>
+    <div style="display:flex;gap:10px">
+      <div style="flex:1;background:#001F3F;border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:12px;color:#60A5FA;font-weight:500">Navy</div>
+        <div style="font-size:10px;color:#60A5FA;font-family:'Space Mono',monospace;margin-top:3px">#001F3F</div>
+      </div>
+      <div style="flex:1;background:#6B7280;border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:12px;color:#F3F4F6;font-weight:500">Graphite Gray</div>
+        <div style="font-size:10px;color:#F3F4F6;font-family:'Space Mono',monospace;margin-top:3px">#6B7280</div>
+      </div>
+      <div style="flex:1;background:#F3F4F6;border-radius:10px;padding:14px;text-align:center;border:1px solid rgba(255,255,255,0.15)">
+        <div style="font-size:12px;color:#374151;font-weight:500">Pearl White</div>
+        <div style="font-size:10px;color:#374151;font-family:'Space Mono',monospace;margin-top:3px">#F3F4F6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Key stats</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+      <div style="background:rgba(15,23,42,0.5);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:12px;text-align:center">
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:#06B6D4">40–60%</div>
+        <div style="font-size:10px;color:#9CA3AF;margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Warmer</div>
+      </div>
+      <div style="background:rgba(15,23,42,0.5);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:12px;text-align:center">
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:#06B6D4">15–25°F</div>
+        <div style="font-size:10px;color:#9CA3AF;margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Advantage</div>
+      </div>
+      <div style="background:rgba(15,23,42,0.5);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:12px;text-align:center">
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:#06B6D4">$85</div>
+        <div style="font-size:10px;color:#9CA3AF;margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Launch price</div>
+      </div>
+      <div style="background:rgba(15,23,42,0.5);border:1px solid rgba(6,182,212,0.2);border-radius:10px;padding:12px;text-align:center">
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:#06B6D4">Sept '26</div>
+        <div style="font-size:10px;color:#9CA3AF;margin-top:4px;text-transform:uppercase;letter-spacing:.06em">Launch</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar"></div>
+</div>

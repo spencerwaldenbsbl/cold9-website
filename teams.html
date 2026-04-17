@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Orders — Cold9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0F;
+      color: #E0E0E0;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .about-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 30;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .about-nav .logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    .about-nav .logo .nine { color: #06B6D4; }
+    .about-nav .logo sup { font-size: 0.45em; color: rgba(255,255,255,0.4); vertical-align: super; font-weight: 700; }
+    .about-nav-links { display: flex; gap: 2rem; align-items: center; }
+    .about-nav a.back {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .about-nav a.back:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .about-nav a.nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px -8px rgba(37,99,235,0.45);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .about-nav a.nav-cta:hover { transform: translateY(-2px); }
+    .nav-cart-link:hover { border-color: #06B6D4 !important; color: #06B6D4 !important; }
+    .nav-cart-link span:empty { display: none; }
+
+    /* ── HERO with bg ─────────────────────────────── */
+    .team-hero {
+      position: relative;
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16rem 2.4rem 8rem;
+      overflow: hidden;
+    }
+    .team-hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .team-hero-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to bottom, rgba(10,10,15,0.65) 0%, rgba(10,10,15,0.92) 100%),
+        radial-gradient(ellipse at 20% 50%, rgba(6,182,212,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(37,99,235,0.18) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 88rem; }
+    .eyebrow {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(37,99,235,0.2));
+      border: 1px solid rgba(6,182,212,0.45);
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero-content h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(4rem, 8vw, 8.4rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 2rem;
+      padding-bottom: 0.15em;
+    }
+    .hero-content h1 .accent {
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .hero-content p {
+      font-size: 1.8rem;
+      color: rgba(255,255,255,0.78);
+      max-width: 60rem;
+      margin: 0 auto 3.2rem;
+      line-height: 1.65;
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 1.6rem 3.4rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 9999px;
+      box-shadow: 0 16px 40px -10px rgba(37,99,235,0.6);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s;
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 50px -10px rgba(37,99,235,0.78), 0 0 28px rgba(6,182,212,0.4);
+    }
+    .hero-cta svg { vertical-align: middle; margin-left: 0.6rem; }
+
+    /* ── SECTION SHELL ────────────────────────────── */
+    .section {
+      position: relative;
+      padding: 9rem 5.6rem;
+    }
+    .section.dark { background: #080812; }
+    .section-inner { max-width: 120rem; margin: 0 auto; }
+    .section-head { text-align: center; margin-bottom: 6rem; }
+    .section-label {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #06B6D4;
+      margin-bottom: 1.4rem;
+    }
+    .section h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.8rem, 4.5vw, 4.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.1em;
+    }
+    .section h2 .accent {
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .section .lead {
+      max-width: 60rem;
+      margin: 0 auto;
+      font-size: 1.55rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.65;
+    }
+
+    /* ── VALUE PROPS ──────────────────────────────── */
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .value-card {
+      background: linear-gradient(145deg, #131322 0%, #0F0F18 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 2.8rem 2.4rem;
+      transition: transform 300ms cubic-bezier(0.16,1,0.3,1), border-color 300ms ease, box-shadow 300ms ease;
+    }
+    .value-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(6,182,212,0.4);
+      box-shadow: 0 24px 50px -20px rgba(6,182,212,0.3);
+    }
+    .value-icon {
+      width: 4.4rem; height: 4.4rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.18), rgba(37,99,235,0.18));
+      border: 1px solid rgba(6,182,212,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #06B6D4;
+      margin-bottom: 1.8rem;
+    }
+    .value-card h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 0.9rem;
+    }
+    .value-card p {
+      font-size: 1.35rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    /* ── HOW IT WORKS ─────────────────────────────── */
+    .steps-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.4rem;
+    }
+    .steps-row::before {
+      content: "";
+      position: absolute;
+      top: 2.8rem;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(6,182,212,0.3), rgba(37,99,235,0.3), transparent);
+      z-index: 0;
+    }
+    .step {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .step-num {
+      width: 5.6rem; height: 5.6rem;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 14px 32px -10px rgba(6,182,212,0.55),
+        inset 0 2px 4px rgba(255,255,255,0.18);
+      border: 4px solid #080812;
+    }
+    .step h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 0.8rem;
+    }
+    .step p {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    /* ── PRICING ──────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      align-items: stretch;
+    }
+    .price-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(19,19,34,0.85) 0%, rgba(15,15,24,0.85) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 3rem 2.4rem 2.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: transform 300ms cubic-bezier(0.16,1,0.3,1), border-color 300ms ease, box-shadow 300ms ease;
+    }
+    .price-card:focus-visible {
+      outline: 2px solid #06B6D4;
+      outline-offset: 4px;
+    }
+    .price-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(6,182,212,0.4);
+      box-shadow: 0 32px 60px -20px rgba(6,182,212,0.3);
+    }
+    .price-card.popular {
+      border-color: rgba(6,182,212,0.55);
+      box-shadow: 0 0 0 1px rgba(6,182,212,0.4), 0 28px 60px -20px rgba(6,182,212,0.4);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -1.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.5rem 1.2rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      box-shadow: 0 10px 24px -8px rgba(6,182,212,0.6);
+      animation: pulseBadge 2.4s ease-in-out infinite;
+    }
+    @keyframes pulseBadge {
+      0%,100% { box-shadow: 0 10px 24px -8px rgba(6,182,212,0.6), 0 0 0 0 rgba(6,182,212,0.5); }
+      50%     { box-shadow: 0 10px 24px -8px rgba(6,182,212,0.6), 0 0 0 12px rgba(6,182,212,0); }
+    }
+    .price-tier {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .price-amount {
+      font-family: 'Space Mono', monospace;
+      font-size: 4.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      padding-bottom: 0.1em;
+    }
+    .price-amount .unit {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.5);
+      -webkit-text-fill-color: rgba(255,255,255,0.5);
+      letter-spacing: 0.08em;
+      margin-left: 0.4rem;
+    }
+    .price-save {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.4);
+      color: #10B981;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      align-self: flex-start;
+    }
+    .price-save.muted {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+    }
+    .price-desc {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.55;
+      margin-top: auto;
+    }
+    .pricing-note {
+      margin-top: 3.2rem;
+      text-align: center;
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.06em;
+      line-height: 1.7;
+    }
+    .pricing-note strong { color: #06B6D4; font-weight: 700; }
+
+    /* ── SIZE CHART ───────────────────────────────── */
+    .size-table-wrap {
+      background: linear-gradient(145deg, #131322 0%, #0F0F18 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .size-table-scroll { overflow-x: auto; }
+    .size-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 56rem;
+    }
+    .size-table thead th {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      padding: 2rem 2rem;
+      text-align: left;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .size-table thead th:not(:first-child) { text-align: right; }
+    .size-table tbody td {
+      padding: 1.6rem 2rem;
+      font-size: 1.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.78);
+    }
+    .size-table tbody tr:last-child td { border-bottom: none; }
+    .size-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.018); }
+    .size-table tbody tr:hover { background: rgba(6,182,212,0.05); }
+    .size-table tbody td:first-child {
+      font-family: 'Space Mono', monospace;
+      color: #06B6D4;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .size-table tbody td:not(:first-child) {
+      font-family: 'Space Mono', monospace;
+      text-align: right;
+      color: #fff;
+    }
+    .size-group-row td {
+      background: rgba(6,182,212,0.04) !important;
+      font-family: 'Space Mono', monospace !important;
+      font-size: 1.05rem !important;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55) !important;
+      text-align: left !important;
+      padding-top: 1.2rem !important;
+      padding-bottom: 1.2rem !important;
+    }
+    .measure-toggle {
+      margin-top: 2.4rem;
+      width: 100%;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 1.6rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .measure-toggle:hover { border-color: rgba(6,182,212,0.4); background: rgba(6,182,212,0.04); }
+    .measure-toggle .chev { transition: transform 0.3s ease; color: #06B6D4; }
+    .measure-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+    .measure-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      background: rgba(255,255,255,0.02);
+      border-radius: 14px;
+      margin-top: 1rem;
+    }
+    .measure-panel-inner {
+      padding: 2rem 2.4rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.4rem;
+    }
+    .measure-tip h4 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #06B6D4;
+      margin-bottom: 0.8rem;
+    }
+    .measure-tip p { font-size: 1.3rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    @media (max-width: 760px) { .measure-panel-inner { grid-template-columns: 1fr; gap: 1.6rem; } }
+
+    /* ── FORM ─────────────────────────────────────── */
+    .form-wrap {
+      max-width: 84rem;
+      margin: 0 auto;
+      background: linear-gradient(145deg, #131322 0%, #0F0F18 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 4rem;
+      box-shadow: 0 40px 80px -30px rgba(6,182,212,0.18);
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+    .field-row .field { margin-bottom: 0; }
+    .field label {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+    .field label .req { color: #06B6D4; margin-left: 0.3rem; }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: #0B0B14;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.5rem;
+      line-height: 1.5;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      outline: none;
+      -webkit-appearance: none;
+         -moz-appearance: none;
+              appearance: none;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .field textarea { min-height: 12rem; resize: vertical; font-family: 'Inter', sans-serif; }
+    .field select {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2306B6D4' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.6rem center;
+      padding-right: 4rem;
+      cursor: pointer;
+    }
+    .field select option { background: #0B0B14; color: #fff; }
+    .field input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacity(0.6); cursor: pointer; }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: #06B6D4;
+      box-shadow: 0 0 0 4px rgba(6,182,212,0.18);
+      background: #0E0E1A;
+    }
+    .field.invalid input, .field.invalid select, .field.invalid textarea {
+      border-color: #EF4444;
+      box-shadow: 0 0 0 4px rgba(239,68,68,0.12);
+    }
+    .field-error { display: none; margin-top: 0.7rem; font-size: 1.2rem; color: #FCA5A5; font-family: 'Space Mono', monospace; }
+    .field.invalid .field-error { display: block; }
+
+    .checkgroup {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .checkgroup label {
+      flex: 1;
+      min-width: 12rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.6rem;
+      background: #0B0B14;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0;
+      text-transform: none;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+      margin-bottom: 0;
+    }
+    .checkgroup label:hover { border-color: rgba(6,182,212,0.3); }
+    .checkgroup input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 1.8rem; height: 1.8rem;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+    .checkgroup input[type="checkbox"]:checked {
+      background: linear-gradient(135deg, #06B6D4, #2563EB);
+      border-color: transparent;
+    }
+    .checkgroup input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      left: 5px; top: 1px;
+      width: 5px; height: 10px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .checkgroup label:has(input:checked) {
+      border-color: rgba(6,182,212,0.5);
+      background: rgba(6,182,212,0.06);
+      color: #fff;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 1.7rem 3rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      box-shadow: 0 12px 32px -10px rgba(37,99,235,0.55);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s, opacity 0.18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px -10px rgba(37,99,235,0.75), 0 0 24px rgba(6,182,212,0.4);
+    }
+    .submit-btn:disabled { opacity: 0.7; cursor: wait; }
+    .submit-btn .spinner {
+      width: 1.6rem; height: 1.6rem;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .submit-btn.loading .spinner { display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .form-success {
+      display: none;
+      margin-top: 2rem;
+      padding: 1.8rem 2rem;
+      background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(37,99,235,0.12));
+      border: 1px solid rgba(6,182,212,0.4);
+      border-radius: 12px;
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .form-success.visible { display: block; opacity: 1; transform: translateY(0); }
+
+    /* ── FAQ ──────────────────────────────────────── */
+    .faq-list { max-width: 84rem; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+    .faq-item {
+      background: linear-gradient(145deg, #131322 0%, #0F0F18 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .faq-item.open { border-color: rgba(6,182,212,0.4); }
+    .faq-q {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 2rem 2.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-align: left;
+      cursor: pointer;
+    }
+    .faq-q .chev {
+      flex-shrink: 0;
+      color: #06B6D4;
+      transition: transform 0.3s ease;
+    }
+    .faq-item.open .faq-q .chev { transform: rotate(180deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+    .faq-a-inner {
+      padding: 0 2.4rem 2rem;
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .about-footer {
+      background: #050508;
+      padding: 3.2rem 5.6rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .about-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 120rem;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.1rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-footer-inner .logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    .about-footer-inner .logo .nine { color: #06B6D4; }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: 80ms; }
+    .reveal.delay-2 { transition-delay: 160ms; }
+    .reveal.delay-3 { transition-delay: 240ms; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .value-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-row { grid-template-columns: repeat(2, 1fr); gap: 4rem 2rem; }
+      .steps-row::before { display: none; }
+    }
+    @media (max-width: 760px) {
+      .about-nav { padding: 1.6rem 2.4rem; }
+      .about-nav-links { gap: 1rem; }
+      .section { padding: 6rem 2.4rem; }
+      .form-wrap { padding: 2.6rem 2rem; }
+      .field-row, .field-row.three { grid-template-columns: 1fr; gap: 0; }
+      .field-row .field { margin-bottom: 2rem; }
+      .value-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .steps-row { grid-template-columns: 1fr; gap: 3rem; }
+      .about-footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .popular-badge { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ────────────────────────────────────────── -->
+  <nav class="about-nav" aria-label="Primary">
+    <a href="index.html" class="logo">Cold<span class="nine">9</span><sup>&reg;</sup></a>
+    <div class="about-nav-links">
+      <a href="index.html" class="back">&larr; Home</a>
+      <a href="products.html" class="nav-cta">Pre-order</a>
+      <a href="cart.html" class="nav-cart-link" aria-label="Shopping cart" style="position:relative;width:3.4rem;height:3.4rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;transition:border-color 0.2s,color 0.2s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <span id="nav-cart-badge" style="position:absolute;top:-5px;right:-5px;min-width:1.6rem;height:1.6rem;border-radius:9999px;background:linear-gradient(135deg,#06B6D4,#2563EB);color:#fff;font-family:'Space Mono',monospace;font-size:0.9rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 0.4rem;box-shadow:0 3px 8px rgba(6,182,212,0.5)"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────── -->
+  <header class="team-hero">
+    <img class="team-hero-bg" src="cold9-team-together.png" alt="">
+    <div class="team-hero-scrim" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow reveal">Team Orders</span>
+      <h1 class="reveal delay-1">Outfit Your <span class="accent">Entire Team</span>.</h1>
+      <p class="reveal delay-2">Cold9 team orders &mdash; premium insulated baseball pants for every player on your roster. Bulk pricing available.</p>
+      <a href="#quote" class="hero-cta reveal delay-3">
+        Request a Team Quote
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- ── VALUE PROPS ────────────────────────────────── -->
+  <section class="section dark" aria-labelledby="value-h">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="section-label reveal">Why Teams Choose Cold9</span>
+        <h2 class="reveal delay-1" id="value-h">Built for the <span class="accent">whole roster</span>.</h2>
+      </div>
+      <div class="value-grid">
+        <div class="value-card reveal">
+          <div class="value-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7h18M3 12h18M3 17h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Bulk Pricing</h3>
+          <p>Discounted rates for orders of 12+ units. The more you order, the more you save.</p>
+        </div>
+        <div class="value-card reveal delay-1">
+          <div class="value-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M5 8h14M5 16h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Custom Sizing</h3>
+          <p>Every player gets their fit. Full size range from Youth Small to Adult 3XL.</p>
+        </div>
+        <div class="value-card reveal delay-2">
+          <div class="value-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Uniform Consistency</h3>
+          <p>Every player looks the same on the field. Available in Pearl White and Graphite Gray.</p>
+        </div>
+        <div class="value-card reveal delay-3">
+          <div class="value-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Competitive Edge</h3>
+          <p>Your team stays warm while the other team freezes. No layers, no bulk, no excuses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ───────────────────────────────── -->
+  <section class="section" aria-labelledby="steps-h">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="section-label reveal">How It Works</span>
+        <h2 class="reveal delay-1" id="steps-h">From request to <span class="accent">game day</span>.</h2>
+      </div>
+      <div class="steps-row">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <h3>Submit Team Info</h3>
+          <p>Tell us your team name, number of players, and sizes needed.</p>
+        </div>
+        <div class="step reveal delay-1">
+          <div class="step-num">2</div>
+          <h3>Get Your Quote</h3>
+          <p>We&rsquo;ll send a personalized quote with bulk pricing within 24 hours.</p>
+        </div>
+        <div class="step reveal delay-2">
+          <div class="step-num">3</div>
+          <h3>Approve &amp; Customize</h3>
+          <p>Confirm your order, select colorway, and finalize sizes.</p>
+        </div>
+        <div class="step reveal delay-3">
+          <div class="step-num">4</div>
+          <h3>Gear Up</h3>
+          <p>Pants are produced and shipped to your team. Ready for game day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ────────────────────────────────────── -->
+  <section class="section dark" aria-labelledby="pricing-h">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="section-label reveal">Bulk Pricing</span>
+        <h2 class="reveal delay-1" id="pricing-h">Save more as your <span class="accent">roster grows</span>.</h2>
+        <p class="lead reveal delay-2">Transparent pricing &mdash; the more pants you order, the lower the per-unit cost.</p>
+      </div>
+      <div class="pricing-grid">
+        <a href="#quote" class="price-card reveal" data-players="8" aria-label="Pre-fill quote form for 6 to 11 units">
+          <span class="price-tier">6&ndash;11 units</span>
+          <div class="price-amount">$82<span class="unit">/pant</span></div>
+          <span class="price-save muted">Retail</span>
+          <p class="price-desc">Standard retail price for individual orders.</p>
+        </a>
+        <a href="#quote" class="price-card reveal delay-1" data-players="18" aria-label="Pre-fill quote form for 12 to 24 units">
+          <span class="price-tier">12&ndash;24 units</span>
+          <div class="price-amount">$75<span class="unit">/pant</span></div>
+          <span class="price-save">Save 9%</span>
+          <p class="price-desc">Bulk pricing kicks in. Perfect for small rosters and JV squads.</p>
+        </a>
+        <a href="#quote" class="price-card popular reveal delay-2" data-players="35" aria-label="Pre-fill quote form for 25 to 49 units">
+          <span class="popular-badge">Most Popular</span>
+          <span class="price-tier">25&ndash;49 units</span>
+          <div class="price-amount">$68<span class="unit">/pant</span></div>
+          <span class="price-save">Save 17%</span>
+          <p class="price-desc">Best value for full varsity rosters and travel programs.</p>
+        </a>
+        <a href="#quote" class="price-card reveal delay-3" data-players="60" aria-label="Pre-fill quote form for 50 or more units">
+          <span class="price-tier">50+ units</span>
+          <div class="price-amount" style="font-size:3rem">Contact Us</div>
+          <span class="price-save">Best Rate</span>
+          <p class="price-desc">Custom pricing for leagues, clubs, and large programs.</p>
+        </a>
+      </div>
+      <p class="pricing-note">
+        All team orders include <strong>free size exchanges within 30 days</strong>.<br>
+        Pricing subject to change. Contact us for the most current rates.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── QUOTE FORM ─────────────────────────────────── -->
+  <section class="section" aria-labelledby="quote-h" id="quote">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="section-label reveal">Get Your Quote</span>
+        <h2 class="reveal delay-1" id="quote-h">Request your <span class="accent">team quote</span>.</h2>
+        <p class="lead reveal delay-2">We&rsquo;ll respond within 24 hours with custom pricing for your roster.</p>
+      </div>
+
+      <div class="form-wrap reveal">
+        <form id="team-form" novalidate
+              action="https://formspree.io/f/your-form-id"
+              method="POST">
+
+          <input type="hidden" name="_subject" value="New Cold9 Team Order Inquiry">
+
+          <div class="field-row">
+            <div class="field" data-field="name">
+              <label for="t-name">Contact Name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="t-name" name="name" autocomplete="name" required placeholder="Coach Smith">
+              <span class="field-error">Please enter your name.</span>
+            </div>
+            <div class="field" data-field="email">
+              <label for="t-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input type="email" id="t-email" name="email" autocomplete="email" inputmode="email" required placeholder="coach@team.com">
+              <span class="field-error">Please enter a valid email.</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="t-phone">Phone</label>
+              <input type="tel" id="t-phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="(555) 123-4567">
+            </div>
+            <div class="field" data-field="org">
+              <label for="t-org">Team / Organization <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="t-org" name="organization" required placeholder="Tampa Sluggers 14U">
+              <span class="field-error">Please enter your team name.</span>
+            </div>
+          </div>
+
+          <div class="field-row three">
+            <div class="field">
+              <label for="t-sport">Sport</label>
+              <select id="t-sport" name="sport">
+                <option value="Baseball">Baseball</option>
+                <option value="Softball">Softball</option>
+                <option value="Both">Both</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="t-level">Level of Play</label>
+              <select id="t-level" name="level">
+                <option value="Youth/Travel Ball">Youth / Travel Ball</option>
+                <option value="High School">High School</option>
+                <option value="College/Club">College / Club</option>
+                <option value="Adult League">Adult League</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field" data-field="players">
+              <label for="t-players">Players <span class="req" aria-hidden="true">*</span></label>
+              <input type="number" id="t-players" name="players" min="1" max="500" required placeholder="18">
+              <span class="field-error">How many players?</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Preferred Colorway</label>
+            <div class="checkgroup">
+              <label><input type="checkbox" name="colorway" value="Pearl White"> Pearl White</label>
+              <label><input type="checkbox" name="colorway" value="Graphite Gray"> Graphite Gray</label>
+              <label><input type="checkbox" name="colorway" value="Pinstripe"> Pinstripe</label>
+              <label><input type="checkbox" name="colorway" value="Custom"> Custom</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="t-date">Preferred Delivery Date</label>
+            <input type="date" id="t-date" name="delivery_date">
+          </div>
+
+          <div class="field">
+            <label for="t-notes">Additional Notes</label>
+            <textarea id="t-notes" name="notes" placeholder="Custom requests, logo placement, sample requests, etc."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn" id="t-submit">
+            <span class="label">Get My Team Quote</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+
+          <div class="form-success" id="t-success" role="status" aria-live="polite">
+            Quote request received! We&rsquo;ll get back to you within 24 hours with your custom pricing.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SIZE CHART ─────────────────────────────────── -->
+  <section class="section dark" aria-labelledby="size-h">
+    <div class="section-inner" style="max-width:96rem">
+      <div class="section-head">
+        <span class="section-label reveal">Size Chart</span>
+        <h2 class="reveal delay-1" id="size-h">Fit every <span class="accent">player</span>.</h2>
+        <p class="lead reveal delay-2">Have players measure their natural waist with a soft tape. Round up if between sizes.</p>
+      </div>
+      <div class="size-table-wrap reveal">
+        <div class="size-table-scroll">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Waist</th>
+                <th>Inseam</th>
+                <th>Hip</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="size-group-row"><td colspan="4">Youth</td></tr>
+              <tr><td>YS</td><td>20&ndash;22&Prime;</td><td>20&ndash;22&Prime;</td><td>28&ndash;30&Prime;</td></tr>
+              <tr><td>YM</td><td>22&ndash;24&Prime;</td><td>22&ndash;24&Prime;</td><td>30&ndash;32&Prime;</td></tr>
+              <tr><td>YL</td><td>24&ndash;26&Prime;</td><td>24&ndash;26&Prime;</td><td>32&ndash;34&Prime;</td></tr>
+              <tr><td>YXL</td><td>26&ndash;28&Prime;</td><td>26&ndash;28&Prime;</td><td>34&ndash;36&Prime;</td></tr>
+              <tr class="size-group-row"><td colspan="4">Adult</td></tr>
+              <tr><td>S</td><td>28&ndash;30&Prime;</td><td>30&ndash;32&Prime;</td><td>36&ndash;38&Prime;</td></tr>
+              <tr><td>M</td><td>30&ndash;32&Prime;</td><td>31&ndash;33&Prime;</td><td>38&ndash;40&Prime;</td></tr>
+              <tr><td>L</td><td>32&ndash;34&Prime;</td><td>32&ndash;34&Prime;</td><td>40&ndash;42&Prime;</td></tr>
+              <tr><td>XL</td><td>34&ndash;36&Prime;</td><td>33&ndash;35&Prime;</td><td>42&ndash;44&Prime;</td></tr>
+              <tr><td>2XL</td><td>36&ndash;38&Prime;</td><td>33&ndash;35&Prime;</td><td>44&ndash;46&Prime;</td></tr>
+              <tr><td>3XL</td><td>38&ndash;40&Prime;</td><td>34&ndash;36&Prime;</td><td>46&ndash;48&Prime;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <button class="measure-toggle" id="measureToggle" aria-expanded="false" aria-controls="measurePanel">
+        <span>How to Measure</span>
+        <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="measure-panel" id="measurePanel">
+        <div class="measure-panel-inner">
+          <div class="measure-tip">
+            <h4>Waist</h4>
+            <p>Wrap a soft tape around the natural waistline (where you&rsquo;d normally wear a belt). Keep it snug but not tight.</p>
+          </div>
+          <div class="measure-tip">
+            <h4>Inseam</h4>
+            <p>Measure from the inside top of the leg down to where you want the pant to break (typically just above the cleat).</p>
+          </div>
+          <div class="measure-tip">
+            <h4>Hip</h4>
+            <p>Measure around the fullest part of the hips, usually 7&ndash;9 inches below the natural waist. Keep the tape level.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ────────────────────────────────────────── -->
+  <section class="section" aria-labelledby="faq-h">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="section-label reveal">FAQ</span>
+        <h2 class="reveal delay-1" id="faq-h">Common <span class="accent">questions</span>.</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What&rsquo;s the minimum order for team pricing?
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">12 units to qualify for bulk pricing.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can we mix sizes in one order?
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Absolutely. Every player gets their size &mdash; just provide a size breakdown when you confirm the order.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can we add our team logo to the pants?
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Custom logo placement is available for orders of 25+ units. Contact us for details and artwork specs.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How long does a team order take?
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Typical turnaround is 4&ndash;6 weeks from order confirmation. Rush orders are available &mdash; contact us with your timeline.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What if a player needs a size exchange?
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Free size exchanges within 30 days of delivery. No questions asked.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Do you offer samples before we commit?
+            <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Yes. We can send 1&ndash;2 sample pairs for your team to try before placing a full order. The sample fee is credited toward your team order.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="about-footer">
+    <div class="about-footer-inner">
+      <a href="index.html" class="logo">Cold<span class="nine">9</span>&reg;</a>
+      <span>&copy; 2026 Cold9 Athletics &middot; Never Freeze Again&trade;</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Reveal
+      var reveals = document.querySelectorAll('.reveal');
+      if (reduced) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      } else if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      }
+
+      // Pricing tier → scroll to form + pre-fill player count
+      document.querySelectorAll('.price-card[data-players]').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          e.preventDefault();
+          var n = card.getAttribute('data-players');
+          var input = document.getElementById('t-players');
+          if (input && n) {
+            input.value = n;
+            var fld = input.closest('.field');
+            if (fld) fld.classList.remove('invalid');
+          }
+          var quote = document.getElementById('quote');
+          if (quote) {
+            quote.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+            setTimeout(function () {
+              var name = document.getElementById('t-name');
+              if (name) name.focus({ preventScroll: true });
+            }, reduced ? 0 : 700);
+          }
+        });
+      });
+
+      // How-to-measure expandable
+      var mt = document.getElementById('measureToggle');
+      var mp = document.getElementById('measurePanel');
+      mt.addEventListener('click', function () {
+        var open = mt.getAttribute('aria-expanded') === 'true';
+        mt.setAttribute('aria-expanded', String(!open));
+        mp.style.maxHeight = open ? '0' : (mp.scrollHeight + 'px');
+      });
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        var q = item.querySelector('.faq-q');
+        var a = item.querySelector('.faq-a');
+        q.addEventListener('click', function () {
+          var open = item.classList.toggle('open');
+          q.setAttribute('aria-expanded', String(open));
+          a.style.maxHeight = open ? (a.scrollHeight + 'px') : '0';
+        });
+      });
+
+      // Form
+      var form = document.getElementById('team-form');
+      var btn = document.getElementById('t-submit');
+      var ok = document.getElementById('t-success');
+
+      function setInvalid(name, invalid) {
+        var f = form.querySelector('[data-field="' + name + '"]');
+        if (f) f.classList.toggle('invalid', invalid);
+      }
+
+      function validate() {
+        var valid = true;
+        if (!form.name.value.trim()) { setInvalid('name', true); valid = false; } else setInvalid('name', false);
+
+        var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRe.test(form.email.value.trim())) { setInvalid('email', true); valid = false; } else setInvalid('email', false);
+
+        if (!form.organization.value.trim()) { setInvalid('org', true); valid = false; } else setInvalid('org', false);
+
+        var p = parseInt(form.players.value, 10);
+        if (!p || p < 1) { setInvalid('players', true); valid = false; } else setInvalid('players', false);
+
+        return valid;
+      }
+
+      ['name','email','organization','players'].forEach(function (n) {
+        var el = form.elements[n];
+        if (!el) return;
+        el.addEventListener('blur', function () {
+          var key = n === 'organization' ? 'org' : n;
+          if (form.querySelector('[data-field="' + key + '"]').classList.contains('invalid')) validate();
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validate()) {
+          var firstInvalid = form.querySelector('.field.invalid input, .field.invalid select');
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+        btn.classList.add('loading');
+        btn.disabled = true;
+
+        var data = new FormData(form);
+        var endpoint = form.getAttribute('action');
+        var useFetch = endpoint && endpoint.indexOf('formspree.io') !== -1 && endpoint.indexOf('your-form-id') === -1;
+
+        if (useFetch) {
+          fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+            .then(function (r) { handleResult(r.ok); })
+            .catch(function () { handleResult(false); });
+        } else {
+          setTimeout(function () { handleResult(true); }, 900);
+        }
+
+        function handleResult(success) {
+          btn.classList.remove('loading');
+          btn.disabled = false;
+          if (success) {
+            form.reset();
+            ok.classList.add('visible');
+            setTimeout(function () { ok.classList.remove('visible'); }, 6000);
+          } else {
+            alert('Sorry — something went wrong. Email us at sales@cold-nine.com');
+          }
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var badge = document.getElementById('nav-cart-badge');
+      if (!badge) return;
+      try {
+        var cart = JSON.parse(localStorage.getItem('cold9_cart') || '[]');
+        var count = cart.reduce(function (s, i) { return s + (i.qty || 1); }, 0);
+        badge.textContent = count > 0 ? count : '';
+      } catch (e) { badge.textContent = ''; }
+    })();
+  </script>
+
+</body>
+</html>

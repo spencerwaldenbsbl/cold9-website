@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cold9 — Pre-order</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .preorder-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .preorder-nav .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .preorder-nav .logo sup { font-size: 0.55em; color: rgba(255,255,255,0.4); vertical-align: super; }
+    .preorder-nav .back {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .preorder-nav .back:hover { color: #fff; background: rgba(255,255,255,0.06); }
+
+    .preorder-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12rem 2.4rem 6rem;
+    }
+    .preorder-head {
+      max-width: 56rem;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .preorder-head .tag {
+      display: inline-flex;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.14), rgba(37,99,235,0.14));
+      border: 1px solid rgba(6,182,212,0.35);
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .preorder-head h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(3.6rem, 6vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      padding-bottom: 0.15em;
+      margin-bottom: 1.6rem;
+    }
+    .preorder-head p {
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+    }
+
+    .preorder-form {
+      width: 100%;
+      max-width: 52rem;
+      background: #151515;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 3.6rem;
+      box-shadow:
+        0 30px 60px -20px rgba(6,182,212,0.08),
+        0 20px 40px -20px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .form-row + .form-row { margin-top: 2rem; }
+    .form-row.two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.6rem;
+    }
+
+    label {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #06B6D4;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.8rem;
+    }
+    .label-row label { margin-bottom: 0; }
+    .chart-toggle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.55);
+      background: transparent;
+      border: none;
+      padding: 0 0 1px;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 1px dashed rgba(255,255,255,0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .chart-toggle:hover { color: #06B6D4; border-color: #06B6D4; }
+    .chart-toggle:focus-visible {
+      outline: 2px solid #06B6D4;
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    .chart-toggle .caret {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      transition: transform 0.25s ease;
+    }
+    .chart-toggle[aria-expanded="true"] .caret { transform: rotate(180deg); }
+
+    .sizing-panel {
+      margin-top: 0;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 0 1.6rem;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition:
+        max-height 0.3s ease,
+        opacity 0.25s ease,
+        padding 0.3s ease,
+        margin-top 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease;
+    }
+    .sizing-panel[aria-hidden="false"] {
+      margin-top: 2rem;
+      max-height: 80rem;
+      opacity: 1;
+      padding: 1.6rem;
+      background: #0d0d0d;
+      border-color: rgba(6,182,212,0.18);
+    }
+    .size-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .sc-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: center;
+      gap: 1.6rem;
+      padding: 1rem 0.6rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 1.3rem;
+    }
+    .sc-row:last-child { border-bottom: none; }
+    .sc-row .sc-size {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      color: #06B6D4;
+      letter-spacing: -0.01em;
+      font-size: 1.4rem;
+    }
+    .sc-row .sc-code {
+      color: rgba(255,255,255,0.78);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    @media (max-width: 520px) {
+      .sc-row {
+        grid-template-columns: 60px 1fr;
+        gap: 1rem;
+        font-size: 1.2rem;
+      }
+      .sc-row .sc-code { white-space: normal; }
+    }
+
+    input, select {
+      width: 100%;
+      padding: 1.4rem 1.6rem;
+      background: #0d0d0d;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #06B6D4;
+      background: #101010;
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.18);
+    }
+    input::placeholder { color: rgba(255,255,255,0.3); }
+    input:invalid:not(:placeholder-shown),
+    select:invalid {
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2306B6D4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1.6rem center;
+      padding-right: 4rem;
+    }
+    select option {
+      background: #151515;
+      color: #fff;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 3rem;
+      padding: 1.6rem 2rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s;
+      box-shadow: 0 10px 30px -10px rgba(37,99,235,0.5);
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px -8px rgba(37,99,235,0.65);
+    }
+    .submit-btn:focus-visible {
+      outline: 2px solid #06B6D4;
+      outline-offset: 3px;
+    }
+    .submit-btn:active { transform: translateY(0); }
+
+    .success {
+      display: none;
+      width: 100%;
+      max-width: 52rem;
+      text-align: center;
+      padding: 5rem 3.6rem;
+      background: #151515;
+      border: 1px solid rgba(6,182,212,0.25);
+      border-radius: 20px;
+      box-shadow:
+        0 30px 60px -20px rgba(6,182,212,0.18),
+        0 20px 40px -20px rgba(0,0,0,0.5);
+    }
+    .success.show { display: block; }
+    .success .check-ring {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 2.4rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #06B6D4 0%, #2563EB 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 36px -8px rgba(6,182,212,0.5);
+    }
+    .success .check-ring svg {
+      width: 36px;
+      height: 36px;
+      color: #fff;
+    }
+    .success h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      padding-bottom: 0.1em;
+    }
+    .success p {
+      font-size: 1.45rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.65;
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .preorder-nav { padding: 1.6rem 2rem; }
+      .preorder-page { padding: 10rem 2rem 4rem; }
+      .preorder-form { padding: 2.4rem; }
+      .form-row.two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="preorder-nav" aria-label="Primary">
+    <a href="index.html" class="logo">Cold<span style="color:#2563EB">9</span><sup>&reg;</sup></a>
+    <a href="index.html" class="back">&larr; Back</a>
+  </nav>
+
+  <main class="preorder-page">
+    <header class="preorder-head">
+      <div class="tag">Exclusively for Pre-orders</div>
+      <h1>Pre-order<br>your pair</h1>
+      <p>Lock in your Cold9 at the exclusive pre-order price of $65. We'll confirm your details before ship in September 2026.</p>
+    </header>
+
+    <section class="success" id="success" aria-live="polite">
+      <div class="check-ring" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2>You're locked in.</h2>
+      <p>Thanks for pre-ordering Cold9. We'll reach out to the email you provided with next steps before ship in September 2026.</p>
+    </section>
+
+    <form class="preorder-form" id="preorderForm" novalidate>
+      <div class="form-row two">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" placeholder="First and last name">
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="(555) 555-5555">
+      </div>
+
+      <div class="form-row">
+        <label for="color">Colorway</label>
+        <select id="color" name="color" required>
+          <option value="" disabled selected>Select colorway</option>
+          <option value="Pearl White">Pearl White</option>
+          <option value="Graphite Gray">Graphite Gray</option>
+        </select>
+      </div>
+
+      <div class="form-row two">
+        <div>
+          <div class="label-row">
+            <label for="size">Size</label>
+            <button type="button" class="chart-toggle" id="sizingToggle" aria-expanded="false" aria-controls="sizingPanel">
+              Sizing chart
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+          <select id="size" name="size" required>
+            <option value="" disabled selected>Select your size</option>
+            <option value="YS">YS (Youth Small)</option>
+            <option value="YM">YM (Youth Medium)</option>
+            <option value="YL">YL (Youth Large)</option>
+            <option value="YXL">YXL (Youth X-Large)</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+            <option value="X-Large">X-Large</option>
+            <option value="2XL">2XL</option>
+            <option value="3XL">3XL</option>
+          </select>
+        </div>
+        <div>
+          <label for="level">Level of play</label>
+          <select id="level" name="level" required>
+            <option value="" disabled selected>Select level</option>
+            <option value="Little League">Little League</option>
+            <option value="Middle School">Middle School</option>
+            <option value="High School">High School</option>
+            <option value="College">College</option>
+            <option value="Adult Rec">Adult / Rec</option>
+            <option value="Pro">Pro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sizing-panel" id="sizingPanel" aria-hidden="true">
+        <div class="size-chart">
+          <div class="sc-row">
+            <span class="sc-size">YS</span>
+            <span class="sc-code">Youth Small &mdash; 20&ndash;22&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">YM</span>
+            <span class="sc-code">Youth Medium &mdash; 22&ndash;24&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">YL</span>
+            <span class="sc-code">Youth Large &mdash; 24&ndash;26&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">YXL</span>
+            <span class="sc-code">Youth X-Large &mdash; 26&ndash;28&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">Small</span>
+            <span class="sc-code">S &mdash; 28&ndash;30&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">Medium</span>
+            <span class="sc-code">M &mdash; 30&ndash;32&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">Large</span>
+            <span class="sc-code">L &mdash; 32&ndash;34&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">X-Large</span>
+            <span class="sc-code">XL &mdash; 34&ndash;36&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">2XL</span>
+            <span class="sc-code">XXL &mdash; 36&ndash;38&quot; waist</span>
+          </div>
+          <div class="sc-row">
+            <span class="sc-size">3XL</span>
+            <span class="sc-code">3XL &mdash; 38&ndash;40&quot; waist</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-btn" type="submit">Reserve Pair &mdash; $65</button>
+    </form>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('preorderForm');
+      var success = document.getElementById('success');
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+          form.style.display = 'none';
+          success.classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      var toggle = document.getElementById('sizingToggle');
+      var panel = document.getElementById('sizingPanel');
+      if (toggle && panel) {
+        toggle.addEventListener('click', function () {
+          var open = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+          panel.setAttribute('aria-hidden', open ? 'true' : 'false');
+        });
+      }
+
+      // Pre-select colorway from URL query param (e.g. ?color=pearl-white)
+      var colorMap = {
+        'pearl-white': 'Pearl White',
+        'graphite-gray': 'Graphite Gray'
+      };
+      var params = new URLSearchParams(window.location.search);
+      var colorParam = (params.get('color') || '').toLowerCase();
+      var colorSelect = document.getElementById('color');
+      if (colorSelect && colorMap[colorParam]) {
+        colorSelect.value = colorMap[colorParam];
+      }
+    })();
+  </script>
+
+</body>
+</html>

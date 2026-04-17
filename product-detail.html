@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cold9 Insulated Baseball Pants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0F;
+      color: #E0E0E0;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .pdp-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .pdp-nav .logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    .pdp-nav .logo .nine { color: #06B6D4; }
+    .pdp-nav .logo sup { font-size: 0.45em; color: rgba(255,255,255,0.4); vertical-align: super; font-weight: 700; }
+    .pdp-nav-links { display: flex; gap: 2rem; align-items: center; }
+    .pdp-nav a.back {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .pdp-nav a.back:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .pdp-nav a.nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px -8px rgba(37,99,235,0.45);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .pdp-nav a.nav-cta:hover { transform: translateY(-2px); }
+
+    /* ── CART ─────────────────────────────────────── */
+    .cart-wrap { position: relative; }
+    .cart-toggle {
+      position: relative;
+      width: 4.4rem; height: 4.4rem;
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cart-toggle:hover { border-color: rgba(6,182,212,0.5); background: rgba(6,182,212,0.06); }
+    .cart-badge {
+      position: absolute;
+      top: -6px; right: -6px;
+      min-width: 1.8rem; height: 1.8rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #06B6D4, #2563EB);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.5rem;
+      box-shadow: 0 4px 12px rgba(6,182,212,0.5);
+    }
+    .cart-badge:empty { display: none; }
+    .cart-dropdown {
+      position: absolute;
+      top: calc(100% + 1.2rem);
+      right: 0;
+      width: 38rem;
+      max-height: 70vh;
+      overflow-y: auto;
+      background: #131322;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      box-shadow: 0 32px 60px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(-8px) scale(0.97);
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .cart-dropdown.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 2.2rem 1.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .cart-header h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .cart-close {
+      width: 3rem; height: 3rem;
+      border: none;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      color: rgba(255,255,255,0.6);
+      font-size: 1.6rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, background 0.2s;
+    }
+    .cart-close:hover { color: #fff; background: rgba(255,255,255,0.12); }
+    .cart-items { padding: 1rem 0; }
+    .cart-item {
+      display: grid;
+      grid-template-columns: 6rem 1fr auto;
+      gap: 1.4rem;
+      align-items: center;
+      padding: 1.4rem 2.2rem;
+      transition: background 0.15s ease;
+    }
+    .cart-item:hover { background: rgba(255,255,255,0.02); }
+    .cart-item-img {
+      width: 6rem; height: 6rem;
+      border-radius: 10px;
+      background: #ECECEC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      overflow: hidden;
+    }
+    .cart-item-img img { width: 100%; height: 100%; object-fit: contain; }
+    .cart-item-info { min-width: 0; }
+    .cart-item-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cart-item-meta {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.3rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+    .cart-item-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #06B6D4;
+      white-space: nowrap;
+    }
+    .cart-item-remove {
+      display: block;
+      margin-top: 0.4rem;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.05rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+    }
+    .cart-item-remove:hover { color: #EF4444; }
+    .cart-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.8rem 2.2rem;
+    }
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.6rem;
+    }
+    .cart-subtotal span:first-child {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.6);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .cart-subtotal-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .cart-checkout {
+      display: block;
+      width: 100%;
+      padding: 1.4rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 28px -10px rgba(37,99,235,0.55);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s;
+    }
+    .cart-checkout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px -10px rgba(37,99,235,0.75);
+    }
+    .cart-empty {
+      padding: 4rem 2.2rem;
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-size: 1.3rem;
+    }
+    .cart-empty svg { margin-bottom: 1.2rem; opacity: 0.3; }
+
+    /* ── BREADCRUMB ───────────────────────────────── */
+    .breadcrumb {
+      padding: 10rem 5.6rem 0;
+      max-width: 144rem;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .breadcrumb a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .breadcrumb a:hover { color: #06B6D4; }
+    .breadcrumb .sep { color: rgba(255,255,255,0.2); }
+    .breadcrumb .current { color: rgba(255,255,255,0.7); }
+
+    /* ── PDP LAYOUT ──────────────────────────────── */
+    .pdp {
+      max-width: 144rem;
+      margin: 0 auto;
+      padding: 3.2rem 5.6rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    /* ── GALLERY ──────────────────────────────────── */
+    .gallery { position: sticky; top: 10rem; }
+    .gallery-main {
+      background: #ECECEC;
+      border-radius: 20px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 40px rgba(0,0,0,0.1));
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gallery-main:hover img { transform: scale(1.03); }
+    .gallery-thumbs {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 1.4rem;
+    }
+    .thumb {
+      width: 8rem;
+      height: 8rem;
+      border-radius: 12px;
+      background: #ECECEC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s ease, opacity 0.2s ease;
+      opacity: 0.55;
+    }
+    .thumb:hover { opacity: 0.8; }
+    .thumb.active { border-color: #06B6D4; opacity: 1; }
+    .thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* ── PRODUCT INFO ─────────────────────────────── */
+    .info { padding-top: 1rem; }
+    .info .tag {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(37,99,235,0.15));
+      border: 1px solid rgba(6,182,212,0.4);
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+    }
+    .info h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 3.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .info .price {
+      font-family: 'Space Mono', monospace;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #06B6D4;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+    .info .price-note {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 2.4rem;
+    }
+    .info .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 2.4rem 0;
+    }
+
+    /* Color selector */
+    .option-group { margin-bottom: 2.4rem; }
+    .option-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .option-label .val { color: #fff; }
+
+    .color-btns { display: flex; gap: 1rem; }
+    .color-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.8rem;
+      background: #0B0B14;
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+    .color-btn:hover { border-color: rgba(255,255,255,0.2); }
+    .color-btn.active { border-color: #06B6D4; background: rgba(6,182,212,0.06); }
+    .color-swatch {
+      width: 2.4rem; height: 2.4rem;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      flex-shrink: 0;
+    }
+    .color-swatch.white { background: #F5F5F0; }
+    .color-swatch.gray { background: #7A7D82; }
+
+    /* Size selector */
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.8rem;
+    }
+    .size-btn {
+      padding: 1.2rem 0.4rem;
+      background: #0B0B14;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: rgba(255,255,255,0.8);
+      font-family: 'Space Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .size-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+    .size-btn.active {
+      border-color: #06B6D4;
+      background: rgba(6,182,212,0.1);
+      color: #fff;
+    }
+    .size-link {
+      display: block;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #06B6D4;
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .size-link:hover { color: #fff; }
+
+    /* Quantity */
+    .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .qty-btn {
+      width: 4.4rem; height: 4.4rem;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      background: #0B0B14;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .qty-btn:hover { border-color: rgba(255,255,255,0.3); }
+    .qty-btn:active { background: rgba(6,182,212,0.08); }
+    .qty-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      min-width: 3rem;
+      text-align: center;
+    }
+
+    /* Add to cart */
+    .atc-btn {
+      width: 100%;
+      margin-top: 2.8rem;
+      padding: 1.8rem 3rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 16px 40px -10px rgba(37,99,235,0.55);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .atc-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 50px -10px rgba(37,99,235,0.75), 0 0 28px rgba(6,182,212,0.35);
+    }
+    .atc-btn:active { transform: translateY(0); }
+    .atc-btn:focus-visible { outline: 3px solid #06B6D4; outline-offset: 4px; }
+
+    .atc-success {
+      display: none;
+      margin-top: 1.4rem;
+      padding: 1.4rem 1.6rem;
+      background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(6,182,212,0.12));
+      border: 1px solid rgba(16,185,129,0.45);
+      border-radius: 10px;
+      color: #10B981;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+    .atc-success.visible { display: block; }
+
+    /* Specs */
+    .spec-strip {
+      margin-top: 3.2rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .spec-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.4rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+    }
+    .spec-icon {
+      width: 3.2rem; height: 3.2rem;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(37,99,235,0.15));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #06B6D4;
+      flex-shrink: 0;
+    }
+    .spec-item span {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.4;
+    }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .pdp-footer {
+      background: #050508;
+      padding: 3.2rem 5.6rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .pdp-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 120rem;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.1rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .pdp-footer-inner .logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    .pdp-footer-inner .logo .nine { color: #06B6D4; }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .pdp { grid-template-columns: 1fr; gap: 3rem; padding: 2rem 2.4rem 6rem; }
+      .gallery { position: static; }
+      .breadcrumb { padding: 10rem 2.4rem 0; }
+    }
+    @media (max-width: 600px) {
+      .pdp-nav { padding: 1.6rem 2.4rem; }
+      .pdp-nav-links { gap: 1rem; }
+      .size-grid { grid-template-columns: repeat(4, 1fr); }
+      .spec-strip { grid-template-columns: 1fr; }
+      .info h1 { font-size: 2.8rem; }
+      .pdp-footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ────────────────────────────────────────── -->
+  <nav class="pdp-nav" aria-label="Primary">
+    <a href="index.html" class="logo">Cold<span class="nine">9</span><sup>&reg;</sup></a>
+    <div class="pdp-nav-links">
+      <a href="products.html" class="back">&larr; Products</a>
+      <a href="products.html" class="nav-cta">Pre-order</a>
+      <div class="cart-wrap">
+        <button class="cart-toggle" id="cart-toggle" aria-label="Open cart" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z" fill="currentColor"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="cart-badge" id="cart-badge"></span>
+        </button>
+        <div class="cart-dropdown" id="cart-dropdown">
+          <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="cart-close" id="cart-close" aria-label="Close cart">&times;</button>
+          </div>
+          <div class="cart-items" id="cart-items"></div>
+          <div class="cart-footer" id="cart-footer" style="display:none">
+            <div class="cart-subtotal">
+              <span>Subtotal</span>
+              <span class="cart-subtotal-val" id="cart-subtotal">$0</span>
+            </div>
+            <a href="cart.html" class="cart-checkout">View Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── BREADCRUMB ─────────────────────────────────── -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">/</span>
+    <a href="products.html">Products</a>
+    <span class="sep">/</span>
+    <span class="current" id="bc-name">Insulated Baseball Pants</span>
+  </div>
+
+  <!-- ── PDP ────────────────────────────────────────── -->
+  <main class="pdp">
+
+    <!-- Gallery -->
+    <div class="gallery">
+      <div class="gallery-main" id="main-img-wrap">
+        <img id="main-img" src="cold9-white-pants-c9-logo.png" alt="Cold9 Insulated Baseball Pants — Pearl White">
+      </div>
+      <div class="gallery-thumbs" id="thumbs">
+        <div class="thumb active" data-img="cold9-white-pants-c9-logo.png" data-color="pearl-white">
+          <img src="cold9-white-pants-c9-logo.png" alt="Pearl White">
+        </div>
+        <div class="thumb" data-img="cold9-gray-pants.png" data-color="graphite-gray">
+          <img src="cold9-gray-pants.png" alt="Graphite Gray">
+        </div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="info">
+      <span class="tag">Pre-order · Launch Sept 2026</span>
+      <h1 id="product-title">Cold9<sup style="font-size:0.45em;vertical-align:super;opacity:0.5">&reg;</sup> Insulated Baseball Pants</h1>
+      <div class="price">$65</div>
+      <div class="price-note">Pre-order price · Ships September 2026</div>
+
+      <div class="divider"></div>
+
+      <!-- Color -->
+      <div class="option-group">
+        <span class="option-label">Color: <span class="val" id="color-name">Pearl White</span></span>
+        <div class="color-btns">
+          <button class="color-btn active" data-color="pearl-white" data-name="Pearl White" data-img="cold9-white-pants-c9-logo.png">
+            <span class="color-swatch white"></span>
+            Pearl White
+          </button>
+          <button class="color-btn" data-color="graphite-gray" data-name="Graphite Gray" data-img="cold9-gray-pants.png">
+            <span class="color-swatch gray"></span>
+            Graphite Gray
+          </button>
+        </div>
+      </div>
+
+      <!-- Size -->
+      <div class="option-group">
+        <span class="option-label">Size: <span class="val" id="size-name">—</span></span>
+        <div class="size-grid" id="size-grid">
+          <button class="size-btn" data-size="YS">YS</button>
+          <button class="size-btn" data-size="YM">YM</button>
+          <button class="size-btn" data-size="YL">YL</button>
+          <button class="size-btn" data-size="YXL">YXL</button>
+          <button class="size-btn" data-size="S">S</button>
+          <button class="size-btn" data-size="M">M</button>
+          <button class="size-btn" data-size="L">L</button>
+          <button class="size-btn" data-size="XL">XL</button>
+          <button class="size-btn" data-size="2XL">2XL</button>
+          <button class="size-btn" data-size="3XL">3XL</button>
+        </div>
+        <a href="sizing.html" class="size-link">View Size Chart &rarr;</a>
+      </div>
+
+      <!-- Quantity -->
+      <div class="option-group">
+        <span class="option-label">Quantity</span>
+        <div class="qty-row">
+          <button class="qty-btn" id="qty-minus" aria-label="Decrease quantity">&minus;</button>
+          <span class="qty-val" id="qty-val">1</span>
+          <button class="qty-btn" id="qty-plus" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+
+      <!-- ATC -->
+      <button class="atc-btn" id="atc-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z" fill="currentColor"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Add to Cart — $65
+      </button>
+
+      <div class="atc-success" id="atc-success">
+        Added to cart! <a href="products.html" style="color:#10B981;text-decoration:underline">Complete your order &rarr;</a>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Specs -->
+      <div class="spec-strip">
+        <div class="spec-item">
+          <div class="spec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M5 5l14 14M5 19L19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Integrated thermal lining</span>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z" stroke="currentColor" stroke-width="2"/></svg></div>
+          <span>Nylon-spandex knee &amp; seat</span>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Pro-grade polyester shell</span>
+        </div>
+        <div class="spec-item">
+          <div class="spec-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div>
+          <span>15–25&deg; thermal advantage</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="pdp-footer">
+    <div class="pdp-footer-inner">
+      <a href="index.html" class="logo">Cold<span class="nine">9</span>&reg;</a>
+      <span>&copy; 2026 Cold9 Athletics &middot; Never Freeze Again&trade;</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var mainImg = document.getElementById('main-img');
+      var colorName = document.getElementById('color-name');
+      var sizeName = document.getElementById('size-name');
+      var qtyVal = document.getElementById('qty-val');
+      var atcBtn = document.getElementById('atc-btn');
+      var atcOk = document.getElementById('atc-success');
+      var qty = 1;
+      var selectedSize = '';
+      var selectedColor = 'pearl-white';
+      var price = 65;
+
+      var colorMap = {
+        'pearl-white': { name: 'Pearl White', img: 'cold9-white-pants-c9-logo.png' },
+        'graphite-gray': { name: 'Graphite Gray', img: 'cold9-gray-pants.png' }
+      };
+
+      // URL param for color
+      var params = new URLSearchParams(window.location.search);
+      var urlColor = params.get('color');
+      if (urlColor === 'graphite-gray') selectColor('graphite-gray');
+
+      // Color buttons
+      document.querySelectorAll('.color-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          selectColor(btn.getAttribute('data-color'));
+        });
+      });
+
+      function selectColor(c) {
+        selectedColor = c;
+        document.querySelectorAll('.color-btn').forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-color') === c);
+        });
+        var active = document.querySelector('.color-btn[data-color="' + c + '"]');
+        if (active) {
+          colorName.textContent = active.getAttribute('data-name');
+          var img = active.getAttribute('data-img');
+          mainImg.src = img;
+          mainImg.alt = 'Cold9 Insulated Baseball Pants — ' + active.getAttribute('data-name');
+        }
+        document.querySelectorAll('.thumb').forEach(function (t) {
+          t.classList.toggle('active', t.getAttribute('data-color') === c);
+        });
+      }
+
+      // Thumbnails
+      document.querySelectorAll('.thumb').forEach(function (t) {
+        t.addEventListener('click', function () {
+          var c = t.getAttribute('data-color');
+          if (c) selectColor(c);
+        });
+      });
+
+      // Size buttons
+      document.querySelectorAll('.size-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          selectedSize = btn.getAttribute('data-size');
+          sizeName.textContent = selectedSize;
+          sizeName.style.color = '';
+          document.querySelectorAll('.size-btn').forEach(function (b) {
+            b.classList.toggle('active', b === btn);
+          });
+        });
+      });
+
+      // Quantity
+      document.getElementById('qty-minus').addEventListener('click', function () {
+        if (qty > 1) { qty--; qtyVal.textContent = qty; updatePrice(); }
+      });
+      document.getElementById('qty-plus').addEventListener('click', function () {
+        if (qty < 20) { qty++; qtyVal.textContent = qty; updatePrice(); }
+      });
+
+      function updatePrice() {
+        var total = price * qty;
+        atcBtn.innerHTML =
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+          '<path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z" fill="currentColor"/>' +
+          '<path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg> Add to Cart — $' + total;
+      }
+
+      // Add to cart
+      atcBtn.addEventListener('click', function () {
+        if (!selectedSize) {
+          sizeName.textContent = 'Please select a size';
+          sizeName.style.color = '#FCA5A5';
+          setTimeout(function () { sizeName.style.color = ''; }, 2000);
+          document.getElementById('size-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        var item = {
+          id: Date.now(),
+          color: selectedColor,
+          colorName: colorMap[selectedColor] ? colorMap[selectedColor].name : selectedColor,
+          img: colorMap[selectedColor] ? colorMap[selectedColor].img : '',
+          size: selectedSize,
+          qty: qty,
+          price: price
+        };
+        var cart = getCart();
+        cart.push(item);
+        saveCart(cart);
+        renderCart();
+        atcOk.classList.add('visible');
+        setTimeout(function () { atcOk.classList.remove('visible'); }, 5000);
+        openCartDropdown();
+      });
+
+      // ── CART DROPDOWN ──────────────────────────────
+      var cartToggle = document.getElementById('cart-toggle');
+      var cartDropdown = document.getElementById('cart-dropdown');
+      var cartClose = document.getElementById('cart-close');
+      var cartBadge = document.getElementById('cart-badge');
+      var cartItemsEl = document.getElementById('cart-items');
+      var cartFooter = document.getElementById('cart-footer');
+      var cartSubtotal = document.getElementById('cart-subtotal');
+
+      function getCart() { return JSON.parse(localStorage.getItem('cold9_cart') || '[]'); }
+      function saveCart(c) { localStorage.setItem('cold9_cart', JSON.stringify(c)); }
+
+      function openCartDropdown() {
+        cartDropdown.classList.add('open');
+        cartToggle.setAttribute('aria-expanded', 'true');
+      }
+      function closeCartDropdown() {
+        cartDropdown.classList.remove('open');
+        cartToggle.setAttribute('aria-expanded', 'false');
+      }
+
+      cartToggle.addEventListener('click', function () {
+        var open = cartDropdown.classList.contains('open');
+        if (open) closeCartDropdown(); else { renderCart(); openCartDropdown(); }
+      });
+      cartClose.addEventListener('click', closeCartDropdown);
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.cart-wrap')) closeCartDropdown();
+      });
+
+      function renderCart() {
+        var cart = getCart();
+        var total = 0;
+        var count = 0;
+
+        if (cart.length === 0) {
+          cartItemsEl.innerHTML =
+            '<div class="cart-empty">' +
+            '<svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z" fill="currentColor"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            '<div>Your cart is empty</div></div>';
+          cartFooter.style.display = 'none';
+          cartBadge.textContent = '';
+          return;
+        }
+
+        var html = '';
+        cart.forEach(function (item, i) {
+          var itemTotal = item.price * item.qty;
+          total += itemTotal;
+          count += item.qty;
+          html +=
+            '<div class="cart-item">' +
+            '<div class="cart-item-img"><img src="' + (item.img || 'cold9-white-pants-c9-logo.png') + '" alt=""></div>' +
+            '<div class="cart-item-info">' +
+            '<div class="cart-item-name">Cold9 Insulated Pants</div>' +
+            '<div class="cart-item-meta">' + (item.colorName || item.color) + ' · ' + item.size + ' · Qty ' + item.qty + '</div>' +
+            '<button class="cart-item-remove" data-index="' + i + '">Remove</button>' +
+            '</div>' +
+            '<div class="cart-item-price">$' + itemTotal + '</div>' +
+            '</div>';
+        });
+
+        cartItemsEl.innerHTML = html;
+        cartFooter.style.display = 'block';
+        cartSubtotal.textContent = '$' + total;
+        cartBadge.textContent = count;
+
+        cartItemsEl.querySelectorAll('.cart-item-remove').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var idx = parseInt(btn.getAttribute('data-index'), 10);
+            var c = getCart();
+            c.splice(idx, 1);
+            saveCart(c);
+            renderCart();
+          });
+        });
+      }
+
+      // Init cart on load
+      renderCart();
+    })();
+  </script>
+
+</body>
+</html>

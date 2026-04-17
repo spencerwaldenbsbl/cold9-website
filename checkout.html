@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Cold9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0F;
+      color: #E0E0E0;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .ck-nav {
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ck-nav .logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    .ck-nav .logo .nine { color: #06B6D4; }
+    .ck-nav .logo sup { font-size: 0.45em; color: rgba(255,255,255,0.4); vertical-align: super; }
+    .ck-nav a.back-cart {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.4rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: color 0.2s, border-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ck-nav a.back-cart:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+    /* ── LAYOUT ───────────────────────────────────── */
+    .ck-layout {
+      max-width: 128rem;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 44rem;
+      min-height: calc(100vh - 7rem);
+    }
+    .ck-form-side {
+      padding: 4rem 5.6rem 6rem;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .ck-summary-side {
+      padding: 4rem 4rem 6rem;
+      background: rgba(255,255,255,0.015);
+    }
+
+    /* ── SECTIONS ─────────────────────────────────── */
+    .ck-section { margin-bottom: 3.6rem; }
+    .ck-section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      cursor: pointer;
+    }
+    .ck-section-head h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .ck-chev {
+      color: #06B6D4;
+      transition: transform 0.3s ease;
+    }
+    .ck-section.collapsed .ck-chev { transform: rotate(180deg); }
+    .ck-section.collapsed .ck-section-body { display: none; }
+
+    /* ── FORM FIELDS ──────────────────────────────── */
+    .ck-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+      margin-bottom: 1.4rem;
+    }
+    .ck-row.full { grid-template-columns: 1fr; }
+    .ck-field { display: flex; flex-direction: column; }
+    .ck-field label {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.7rem;
+    }
+    .ck-field label .req { color: #06B6D4; }
+    .ck-field input, .ck-field select {
+      width: 100%;
+      background: #0B0B14;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 1.3rem 1.4rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.4rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    .ck-field input::placeholder { color: rgba(255,255,255,0.3); }
+    .ck-field input:focus, .ck-field select:focus {
+      border-color: #06B6D4;
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.15);
+    }
+    .ck-field select {
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2306B6D4' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.4rem center;
+      padding-right: 3.6rem;
+      cursor: pointer;
+    }
+    .ck-field select option { background: #0B0B14; color: #fff; }
+
+    /* Radio / checkbox options */
+    .ck-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 1.6rem;
+      background: #0B0B14;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .ck-option:hover { border-color: rgba(255,255,255,0.2); }
+    .ck-option.selected { border-color: #06B6D4; background: rgba(6,182,212,0.04); }
+    .ck-option-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .ck-radio {
+      width: 1.8rem; height: 1.8rem;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+    .ck-option.selected .ck-radio {
+      border-color: #06B6D4;
+    }
+    .ck-radio-dot {
+      width: 0.8rem; height: 0.8rem;
+      border-radius: 50%;
+      background: transparent;
+      transition: background 0.2s;
+    }
+    .ck-option.selected .ck-radio-dot { background: #06B6D4; }
+    .ck-option-label {
+      font-size: 1.35rem;
+      color: #fff;
+      font-weight: 600;
+    }
+    .ck-option-sublabel {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .ck-option-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Pay button */
+    .ck-pay {
+      width: 100%;
+      margin-top: 2rem;
+      padding: 1.8rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 16px 40px -10px rgba(37,99,235,0.55);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s;
+    }
+    .ck-pay:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 50px -10px rgba(37,99,235,0.75), 0 0 24px rgba(6,182,212,0.35);
+    }
+
+    /* ── ORDER SUMMARY ────────────────────────────── */
+    .summary-item {
+      display: grid;
+      grid-template-columns: 6.4rem 1fr auto;
+      gap: 1.4rem;
+      align-items: center;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .summary-item:last-child { border-bottom: none; }
+    .summary-img {
+      position: relative;
+      width: 6.4rem; height: 6.4rem;
+      border-radius: 10px;
+      background: #ECECEC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem;
+    }
+    .summary-img img { width: 100%; height: 100%; object-fit: contain; }
+    .summary-qty-badge {
+      position: absolute;
+      top: -6px; right: -6px;
+      width: 2rem; height: 2rem;
+      border-radius: 50%;
+      background: #06B6D4;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .summary-info h4 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .summary-meta {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .summary-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Discount */
+    .discount-row {
+      display: flex;
+      gap: 1rem;
+      margin: 2.4rem 0;
+    }
+    .discount-row input {
+      flex: 1;
+      background: #0B0B14;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.3rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .discount-row input:focus { border-color: #06B6D4; }
+    .discount-row input::placeholder { color: rgba(255,255,255,0.3); }
+    .discount-row button {
+      padding: 1.2rem 2rem;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .discount-row button:hover { border-color: rgba(6,182,212,0.4); background: rgba(6,182,212,0.06); }
+
+    /* Totals */
+    .totals { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2rem; margin-top: 1rem; }
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      font-size: 1.35rem;
+      color: rgba(255,255,255,0.65);
+    }
+    .total-line .val { color: #fff; font-weight: 600; }
+    .total-line.grand {
+      margin-top: 1.6rem;
+      padding-top: 1.6rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .total-line.grand .val {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.6rem;
+      letter-spacing: -0.02em;
+    }
+    .total-line .val .currency {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.45);
+      margin-right: 0.4rem;
+      font-weight: 400;
+    }
+
+    /* Success overlay */
+    .ck-success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(16px);
+      align-items: center;
+      justify-content: center;
+    }
+    .ck-success-overlay.visible { display: flex; }
+    .ck-success-card {
+      text-align: center;
+      max-width: 48rem;
+      padding: 5rem 4rem;
+    }
+    .ck-success-check {
+      width: 7rem; height: 7rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #06B6D4, #2563EB);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2.4rem;
+      box-shadow: 0 16px 40px -10px rgba(6,182,212,0.6);
+    }
+    .ck-success-card h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+    .ck-success-card p {
+      font-size: 1.5rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+      margin-bottom: 3rem;
+    }
+    .ck-success-card a {
+      display: inline-block;
+      padding: 1.4rem 3rem;
+      background: linear-gradient(90deg, #06B6D4, #2563EB);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 9999px;
+      box-shadow: 0 12px 32px -10px rgba(37,99,235,0.55);
+    }
+
+    /* Responsive */
+    @media (max-width: 1060px) {
+      .ck-layout { grid-template-columns: 1fr; }
+      .ck-form-side { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .ck-summary-side { padding: 3rem 5.6rem 6rem; }
+    }
+    @media (max-width: 600px) {
+      .ck-nav { padding: 1.6rem 2.4rem; }
+      .ck-form-side { padding: 3rem 2.4rem 4rem; }
+      .ck-summary-side { padding: 3rem 2.4rem 6rem; }
+      .ck-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ────────────────────────────────────────── -->
+  <nav class="ck-nav">
+    <a href="index.html" class="logo">Cold<span class="nine">9</span><sup>&reg;</sup></a>
+    <a href="cart.html" class="back-cart">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Cart
+    </a>
+  </nav>
+
+  <!-- ── CHECKOUT ───────────────────────────────────── -->
+  <div class="ck-layout">
+
+    <!-- LEFT: Form -->
+    <div class="ck-form-side">
+      <form id="ck-form" novalidate>
+
+        <!-- Contact -->
+        <div class="ck-section">
+          <div class="ck-section-head">
+            <h2>Contact</h2>
+          </div>
+          <div class="ck-section-body">
+            <div class="ck-row full">
+              <div class="ck-field">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ship to -->
+        <div class="ck-section">
+          <div class="ck-section-head">
+            <h2>Ship To</h2>
+          </div>
+          <div class="ck-section-body">
+            <div class="ck-row full">
+              <div class="ck-field">
+                <label>Full Name <span class="req">*</span></label>
+                <input type="text" name="fullname" placeholder="Jordan Smith" required autocomplete="name">
+              </div>
+            </div>
+            <div class="ck-row full">
+              <div class="ck-field">
+                <label>Address <span class="req">*</span></label>
+                <input type="text" name="address" placeholder="123 Main St" required autocomplete="address-line1">
+              </div>
+            </div>
+            <div class="ck-row">
+              <div class="ck-field">
+                <label>City <span class="req">*</span></label>
+                <input type="text" name="city" placeholder="Tampa" required autocomplete="address-level2">
+              </div>
+              <div class="ck-field">
+                <label>State <span class="req">*</span></label>
+                <select name="state" required>
+                  <option value="">Select state</option>
+                  <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+                </select>
+              </div>
+            </div>
+            <div class="ck-row">
+              <div class="ck-field">
+                <label>ZIP Code <span class="req">*</span></label>
+                <input type="text" name="zip" placeholder="33606" required autocomplete="postal-code" inputmode="numeric">
+              </div>
+              <div class="ck-field">
+                <label>Phone</label>
+                <input type="tel" name="phone" placeholder="(555) 123-4567" autocomplete="tel">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipping -->
+        <div class="ck-section">
+          <div class="ck-section-head">
+            <h2>Shipping Method</h2>
+          </div>
+          <div class="ck-section-body">
+            <div class="ck-option selected" data-ship="standard">
+              <div class="ck-option-left">
+                <div class="ck-radio"><div class="ck-radio-dot"></div></div>
+                <div>
+                  <div class="ck-option-label">Standard Shipping</div>
+                  <div class="ck-option-sublabel">5&ndash;7 business days</div>
+                </div>
+              </div>
+              <div class="ck-option-price">Free</div>
+            </div>
+            <div class="ck-option" data-ship="express">
+              <div class="ck-option-left">
+                <div class="ck-radio"><div class="ck-radio-dot"></div></div>
+                <div>
+                  <div class="ck-option-label">Express Shipping</div>
+                  <div class="ck-option-sublabel">2&ndash;3 business days</div>
+                </div>
+              </div>
+              <div class="ck-option-price">$12.00</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="ck-section">
+          <div class="ck-section-head">
+            <h2>Payment</h2>
+          </div>
+          <div class="ck-section-body">
+            <div class="ck-row">
+              <div class="ck-field" style="grid-column:1/-1">
+                <label>Card Number <span class="req">*</span></label>
+                <input type="text" name="card" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number" required>
+              </div>
+            </div>
+            <div class="ck-row">
+              <div class="ck-field">
+                <label>Expiration <span class="req">*</span></label>
+                <input type="text" name="exp" placeholder="MM / YY" autocomplete="cc-exp" required>
+              </div>
+              <div class="ck-field">
+                <label>CVV <span class="req">*</span></label>
+                <input type="text" name="cvv" placeholder="123" inputmode="numeric" autocomplete="cc-csc" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="ck-pay" id="ck-pay">Pay Now</button>
+
+      </form>
+    </div>
+
+    <!-- RIGHT: Summary -->
+    <div class="ck-summary-side">
+      <div id="summary-items"></div>
+      <div class="discount-row">
+        <input type="text" id="discount-input" placeholder="Discount code or gift card">
+        <button type="button" id="discount-apply">Apply</button>
+      </div>
+      <div id="discount-msg" style="display:none;font-family:'Space Mono',monospace;font-size:1.1rem;letter-spacing:0.06em;padding:0 0 1.4rem;margin-top:-0.6rem"></div>
+      <div class="totals">
+        <div class="total-line">
+          <span>Subtotal &middot; <span id="s-count">0</span> items</span>
+          <span class="val" id="s-subtotal">$0.00</span>
+        </div>
+        <div class="total-line" id="s-discount-line" style="display:none">
+          <span>Discount <span id="s-discount-label" style="color:#10B981"></span></span>
+          <span class="val" id="s-discount" style="color:#10B981">-$0.00</span>
+        </div>
+        <div class="total-line">
+          <span>Shipping</span>
+          <span class="val" id="s-shipping">Free</span>
+        </div>
+        <div class="total-line">
+          <span>Estimated tax</span>
+          <span class="val" id="s-tax">$0.00</span>
+        </div>
+        <div class="total-line grand">
+          <span>Total</span>
+          <span class="val"><span class="currency">USD</span> <span id="s-total">$0.00</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SUCCESS OVERLAY ────────────────────────────── -->
+  <div class="ck-success-overlay" id="ck-success">
+    <div class="ck-success-card">
+      <div class="ck-success-check">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h2>Order Confirmed!</h2>
+      <p>Thanks for your Cold9 pre-order. We&rsquo;ll email you a confirmation with tracking details when your pants ship in September 2026.</p>
+      <a href="index.html">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var TAX_RATE = 0.07;
+      var shippingCost = 0;
+      var discountRate = 0;
+      var discountCode = '';
+      var VALID_CODES = {
+        'SPUNK50': 0.50
+      };
+      var colorImgs = {
+        'pearl-white': 'cold9-white-pants-c9-logo.png',
+        'graphite-gray': 'cold9-gray-pants.png'
+      };
+
+      function getCart() { return JSON.parse(localStorage.getItem('cold9_cart') || '[]'); }
+
+      function renderSummary() {
+        var cart = getCart();
+        var el = document.getElementById('summary-items');
+        var subtotal = 0;
+        var count = 0;
+
+        if (cart.length === 0) {
+          el.innerHTML = '<p style="color:rgba(255,255,255,0.4);padding:2rem 0;text-align:center">No items in cart</p>';
+        } else {
+          var html = '';
+          cart.forEach(function (item) {
+            var t = item.price * item.qty;
+            subtotal += t;
+            count += item.qty;
+            var img = item.img || colorImgs[item.color] || 'cold9-white-pants-c9-logo.png';
+            html +=
+              '<div class="summary-item">' +
+              '<div class="summary-img"><img src="' + img + '" alt=""><span class="summary-qty-badge">' + item.qty + '</span></div>' +
+              '<div class="summary-info">' +
+              '<h4>Cold9&reg; Insulated Pants</h4>' +
+              '<div class="summary-meta">' + (item.colorName || item.color) + ' &middot; ' + item.size + '</div>' +
+              '</div>' +
+              '<div class="summary-price">$' + t.toFixed(2) + '</div>' +
+              '</div>';
+          });
+          el.innerHTML = html;
+        }
+
+        var discountAmt = subtotal * discountRate;
+        var afterDiscount = subtotal - discountAmt;
+        var tax = afterDiscount * TAX_RATE;
+        var total = afterDiscount + shippingCost + tax;
+
+        document.getElementById('s-count').textContent = count;
+        document.getElementById('s-subtotal').textContent = '$' + subtotal.toFixed(2);
+
+        var discountLine = document.getElementById('s-discount-line');
+        if (discountRate > 0) {
+          discountLine.style.display = '';
+          document.getElementById('s-discount-label').textContent = '(' + discountCode + ')';
+          document.getElementById('s-discount').textContent = '-$' + discountAmt.toFixed(2);
+        } else {
+          discountLine.style.display = 'none';
+        }
+
+        document.getElementById('s-shipping').textContent = shippingCost === 0 ? 'Free' : '$' + shippingCost.toFixed(2);
+        document.getElementById('s-tax').textContent = '$' + tax.toFixed(2);
+        document.getElementById('s-total').textContent = '$' + total.toFixed(2);
+
+        var payBtn = document.getElementById('ck-pay');
+        payBtn.textContent = 'Pay Now — $' + total.toFixed(2);
+      }
+
+      // Discount code
+      var discountInput = document.getElementById('discount-input');
+      var discountApply = document.getElementById('discount-apply');
+      var discountMsg = document.getElementById('discount-msg');
+
+      discountApply.addEventListener('click', function () {
+        var code = discountInput.value.trim().toUpperCase();
+        if (VALID_CODES[code] !== undefined) {
+          discountRate = VALID_CODES[code];
+          discountCode = code;
+          discountMsg.style.display = 'block';
+          discountMsg.style.color = '#10B981';
+          discountMsg.textContent = 'Code "' + code + '" applied — ' + (discountRate * 100) + '% off!';
+          discountInput.style.borderColor = 'rgba(16,185,129,0.5)';
+          discountInput.disabled = true;
+          discountApply.textContent = 'Applied';
+          discountApply.disabled = true;
+          discountApply.style.opacity = '0.5';
+        } else {
+          discountRate = 0;
+          discountCode = '';
+          discountMsg.style.display = 'block';
+          discountMsg.style.color = '#FCA5A5';
+          discountMsg.textContent = 'Invalid code. Please try again.';
+          discountInput.style.borderColor = 'rgba(239,68,68,0.5)';
+          setTimeout(function () {
+            discountMsg.style.display = 'none';
+            discountInput.style.borderColor = '';
+          }, 3000);
+        }
+        renderSummary();
+      });
+
+      discountInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); discountApply.click(); }
+      });
+
+      // Shipping method toggle
+      document.querySelectorAll('.ck-option[data-ship]').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          document.querySelectorAll('.ck-option[data-ship]').forEach(function (o) { o.classList.remove('selected'); });
+          opt.classList.add('selected');
+          shippingCost = opt.getAttribute('data-ship') === 'express' ? 12 : 0;
+          renderSummary();
+        });
+      });
+
+      // Form submit
+      document.getElementById('ck-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        localStorage.removeItem('cold9_cart');
+        document.getElementById('ck-success').classList.add('visible');
+      });
+
+      renderSummary();
+    })();
+  </script>
+
+</body>
+</html>

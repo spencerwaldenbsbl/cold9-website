@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Cold9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0F;
+      color: #E0E0E0;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .products-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .products-nav .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .products-nav .logo .nine { color: #2563EB; }
+    .products-nav .logo sup { font-size: 0.55em; color: rgba(255,255,255,0.4); vertical-align: super; }
+    .products-nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .products-nav a.back {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .products-nav a.back:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .products-nav a.nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px -8px rgba(37,99,235,0.45);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .products-nav a.nav-cta:hover { transform: translateY(-2px); }
+
+    /* ── HEADER ───────────────────────────────────── */
+    .products-header {
+      position: relative;
+      padding: 16rem 2.4rem 6rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .products-header::before {
+      content: "";
+      position: absolute;
+      inset: -10% -10% auto auto;
+      width: 60vw;
+      height: 55vh;
+      background: radial-gradient(ellipse at center, rgba(6,182,212,0.18) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .products-header::after {
+      content: "";
+      position: absolute;
+      inset: auto auto -10% -10%;
+      width: 60vw;
+      height: 55vh;
+      background: radial-gradient(ellipse at center, rgba(37,99,235,0.18) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .products-header-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 72rem;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.14), rgba(37,99,235,0.14));
+      border: 1px solid rgba(6,182,212,0.35);
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .products-header h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(3.6rem, 7vw, 7.2rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 1.6rem;
+      padding-bottom: 0.12em;
+    }
+    .products-header h1 .accent {
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .products-header p {
+      font-size: 1.6rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 56rem;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── PRODUCT GRID ─────────────────────────────── */
+    .products-grid {
+      max-width: 110rem;
+      margin: 0 auto;
+      padding: 4rem 5.6rem 10rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      background: #131322;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      transition:
+        transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 320ms ease;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(6,182,212,0.4);
+      box-shadow:
+        0 32px 64px -20px rgba(6,182,212,0.3),
+        0 16px 32px -16px rgba(37,99,235,0.2);
+    }
+    .product-card:focus-visible {
+      outline: 2px solid #06B6D4;
+      outline-offset: 4px;
+    }
+    .product-image-frame {
+      position: relative;
+      background: #ECECEC;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3.6rem;
+    }
+    .product-image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .product-image-frame img {
+      transform: scale(1.04);
+    }
+    .product-body {
+      padding: 2.8rem 3rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .product-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #06B6D4;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .product-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1.05;
+      margin-top: 0.2rem;
+    }
+    .product-desc {
+      font-size: 1.35rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      margin-top: 0.2rem;
+    }
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.6rem;
+      padding-top: 1.6rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .product-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+    }
+    .product-price .old {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.35rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: line-through;
+      text-decoration-color: rgba(239,68,68,0.9);
+      text-decoration-thickness: 2px;
+    }
+    .product-price .new {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .product-price .suffix {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.04em;
+    }
+    .product-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #06B6D4;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .product-cta svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .product-cta { color: #fff; }
+    .product-card:hover .product-cta svg { transform: translateX(4px); }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .products-footer {
+      background: #050508;
+      padding: 3.2rem 5.6rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .products-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 120rem;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.1rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .products-footer-inner .logo { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .products-footer-inner .logo .nine { color: #2563EB; }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.delay-1 { transition-delay: 80ms; }
+    .reveal.delay-2 { transition-delay: 160ms; }
+
+    @media (max-width: 900px) {
+      .products-nav { padding: 1.6rem 2.4rem; }
+      .products-nav-links { gap: 1rem; }
+      .products-header { padding: 12rem 2rem 4rem; }
+      .products-grid { grid-template-columns: 1fr; padding: 2rem 2rem 6rem; gap: 2.4rem; }
+      .products-footer { padding: 2.4rem; }
+      .products-footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ────────────────────────────────────────── -->
+  <nav class="products-nav" aria-label="Primary">
+    <a href="index.html" class="logo">Cold<span class="nine">9</span><sup>&reg;</sup></a>
+    <div class="products-nav-links">
+      <a href="index.html" class="back">&larr; Home</a>
+      <a href="products.html" class="nav-cta">Pre-order</a>
+    </div>
+  </nav>
+
+  <!-- ── HEADER ─────────────────────────────────────── -->
+  <header class="products-header">
+    <div class="products-header-inner">
+      <span class="eyebrow reveal">The Cold9 Collection</span>
+      <h1 class="reveal delay-1"><span class="accent">Products.</span></h1>
+      <p class="reveal delay-2">One pant. Two colorways. Integrated thermal lining so you never freeze on the field again.</p>
+    </div>
+  </header>
+
+  <!-- ── PRODUCT GRID ───────────────────────────────── -->
+  <main class="products-grid">
+
+    <a href="product-detail.html?color=pearl-white" class="product-card reveal" aria-label="Pre-order Cold9 in Pearl White">
+      <div class="product-image-frame">
+        <img src="cold9-white-pants-c9-logo.png" alt="Cold9 insulated baseball pant in Pearl White colorway">
+      </div>
+      <div class="product-body">
+        <span class="product-tag">Colorway 01</span>
+        <h2 class="product-name">Pearl White</h2>
+        <p class="product-desc">Classic on-field white. Insulated thermal lining with nylon-spandex slide zones. Looks like any premium pant &mdash; performs like none.</p>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="old">$85</span>
+            <span class="new">$65</span>
+            <span class="suffix">/pair</span>
+          </div>
+          <span class="product-cta">
+            Pre-order
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+    <a href="product-detail.html?color=graphite-gray" class="product-card reveal delay-1" aria-label="Pre-order Cold9 in Graphite Gray">
+      <div class="product-image-frame">
+        <img src="cold9-gray-pants.png" alt="Cold9 insulated baseball pant in Graphite Gray colorway">
+      </div>
+      <div class="product-body">
+        <span class="product-tag">Colorway 02</span>
+        <h2 class="product-name">Graphite Gray</h2>
+        <p class="product-desc">A clean modern gray that plays with any uniform. Same dual-layer thermal build, same slide-zone protection, same invisible insulation.</p>
+        <div class="product-footer">
+          <div class="product-price">
+            <span class="old">$85</span>
+            <span class="new">$65</span>
+            <span class="suffix">/pair</span>
+          </div>
+          <span class="product-cta">
+            Pre-order
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="products-footer">
+    <div class="products-footer-inner">
+      <a href="index.html" class="logo">Cold<span class="nine">9</span>&reg;</a>
+      <span>&copy; 2026 Cold9 Athletics &middot; Never Freeze Again&trade;</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var reveals = document.querySelectorAll('.reveal');
+      if (reduced || !('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (el) { io.observe(el); });
+      }
+    })();
+  </script>
+
+</body>
+</html>

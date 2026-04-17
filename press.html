@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Press — Cold9</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0A0A0F;
+      color: #E0E0E0;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .about-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 5.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      background: rgba(10,10,15,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .about-nav .logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+    .about-nav .logo .nine { color: #06B6D4; }
+    .about-nav .logo sup { font-size: 0.45em; color: rgba(255,255,255,0.4); vertical-align: super; font-weight: 700; }
+    .about-nav-links { display: flex; gap: 2rem; align-items: center; }
+    .about-nav a.back {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.6rem;
+      border-radius: 9999px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .about-nav a.back:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .about-nav a.nav-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px -8px rgba(37,99,235,0.45);
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .about-nav a.nav-cta:hover { transform: translateY(-2px); }
+    .nav-cart-link:hover { border-color: #06B6D4 !important; color: #06B6D4 !important; }
+    .nav-cart-link span:empty { display: none; }
+
+    /* ── HERO ─────────────────────────────────────── */
+    .about-hero {
+      position: relative;
+      min-height: 46vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16rem 2.4rem 6rem;
+      overflow: hidden;
+      background: #0A0A0F;
+    }
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      inset: -20% -10% auto auto;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, rgba(6,182,212,0.2) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .about-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto auto -20% -10%;
+      width: 60vw;
+      height: 60vh;
+      background: radial-gradient(ellipse at center, rgba(37,99,235,0.2) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-size: 60px 60px;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+      -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 80rem; }
+    .eyebrow {
+      display: inline-block;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.14), rgba(37,99,235,0.14));
+      border: 1px solid rgba(6,182,212,0.35);
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero-content h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(4rem, 8vw, 8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 2rem;
+      padding-bottom: 0.15em;
+    }
+    .hero-content h1 .accent {
+      background: linear-gradient(90deg, #06B6D4 0%, #2563EB 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .hero-content p {
+      font-size: 1.7rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 56rem;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── PRESS GRID ───────────────────────────────── */
+    .press-section {
+      position: relative;
+      padding: 6rem 5.6rem 10rem;
+      background: #080812;
+    }
+    .press-inner { max-width: 120rem; margin: 0 auto; }
+    .press-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(34rem, 1fr));
+      gap: 2.8rem;
+    }
+
+    /* Featured card spans 2 columns on wide screens */
+    .press-card {
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(145deg, #131322 0%, #0F0F18 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 300ms cubic-bezier(0.16,1,0.3,1), border-color 300ms ease, box-shadow 300ms ease;
+    }
+    .press-card:hover,
+    .press-card:focus-visible {
+      transform: translateY(-6px);
+      border-color: rgba(6,182,212,0.4);
+      box-shadow:
+        0 32px 60px -20px rgba(6,182,212,0.3),
+        0 18px 36px -18px rgba(37,99,235,0.2);
+      outline: none;
+    }
+    .press-card.featured {
+      grid-column: span 2;
+    }
+    @media (max-width: 760px) {
+      .press-card.featured { grid-column: span 1; }
+    }
+
+    .press-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #0a0a14;
+    }
+    .press-card.featured .press-thumb { aspect-ratio: 21 / 9; }
+    .press-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 600ms cubic-bezier(0.16,1,0.3,1);
+    }
+    .press-card:hover .press-thumb img { transform: scale(1.04); }
+    .press-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
+    }
+    .press-source-tag {
+      position: absolute;
+      top: 1.6rem;
+      left: 1.6rem;
+      padding: 0.55rem 1.1rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(6,182,212,0.4);
+      border-radius: 9999px;
+      color: #06B6D4;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .press-body {
+      padding: 2.8rem 2.6rem 2.6rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 1.2rem;
+    }
+    .press-meta {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .press-meta .dot {
+      width: 0.4rem; height: 0.4rem;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+    }
+    .press-card h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .press-card.featured h2 {
+      font-size: clamp(2.4rem, 3vw, 3.2rem);
+      line-height: 1.1;
+    }
+    .press-card p.excerpt {
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .press-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #06B6D4;
+    }
+    .press-cta svg { transition: transform 0.25s ease; }
+    .press-card:hover .press-cta svg { transform: translate(3px, -3px); }
+
+    /* Empty/coming-soon placeholder */
+    .press-coming {
+      grid-column: 1 / -1;
+      margin-top: 2rem;
+      text-align: center;
+      padding: 3rem 2rem;
+      border: 1px dashed rgba(255,255,255,0.12);
+      border-radius: 16px;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .press-coming a {
+      color: #06B6D4;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(6,182,212,0.4);
+      padding-bottom: 1px;
+    }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .about-footer {
+      background: #050508;
+      padding: 3.2rem 5.6rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .about-footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 120rem;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.1rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .about-footer-inner .logo {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+    .about-footer-inner .logo .nine { color: #06B6D4; }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: 80ms; }
+    .reveal.delay-2 { transition-delay: 160ms; }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .about-nav { padding: 1.6rem 2.4rem; }
+      .about-nav-links { gap: 1rem; }
+      .press-section { padding: 4rem 2.4rem 7rem; }
+      .about-footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ────────────────────────────────────────── -->
+  <nav class="about-nav" aria-label="Primary">
+    <a href="index.html" class="logo">Cold<span class="nine">9</span><sup>&reg;</sup></a>
+    <div class="about-nav-links">
+      <a href="index.html" class="back">&larr; Home</a>
+      <a href="products.html" class="nav-cta">Pre-order</a>
+      <a href="cart.html" class="nav-cart-link" aria-label="Shopping cart" style="position:relative;width:3.4rem;height:3.4rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;transition:border-color 0.2s,color 0.2s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 22a1 1 0 100-2 1 1 0 000 2zM20 22a1 1 0 100-2 1 1 0 000 2z"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+        <span id="nav-cart-badge" style="position:absolute;top:-5px;right:-5px;min-width:1.6rem;height:1.6rem;border-radius:9999px;background:linear-gradient(135deg,#06B6D4,#2563EB);color:#fff;font-family:'Space Mono',monospace;font-size:0.9rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 0.4rem;box-shadow:0 3px 8px rgba(6,182,212,0.5)"></span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────── -->
+  <header class="about-hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow reveal">Press</span>
+      <h1 class="reveal delay-1">In The <span class="accent">News</span>.</h1>
+      <p class="reveal delay-2">Coverage, awards, and stories about Cold9 and the team behind the first insulated baseball pant.</p>
+    </div>
+  </header>
+
+  <!-- ── PRESS GRID ─────────────────────────────────── -->
+  <section class="press-section" aria-labelledby="press-h">
+    <div class="press-inner">
+      <div class="press-grid" id="press-grid">
+
+        <!-- ── ARTICLE: UTampa New Venture Expo ─────── -->
+        <a class="press-card featured reveal"
+           href="https://www.ut.edu/news-and-utampa-life/2026/new-venture-expo-showcases-student-and-incubator-businesses-"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Read on University of Tampa: New Venture Expo Showcases Student and Incubator Businesses">
+          <div class="press-thumb">
+            <span class="press-source-tag">University of Tampa</span>
+            <img src="nve-team.jpg" alt="Cold9 co-founders Spencer Walden, Sam Levine, and Joshua Greenspon at their 1st Place prototype booth at the University of Tampa New Venture Expo" loading="lazy">
+          </div>
+          <div class="press-body">
+            <div class="press-meta">
+              <span>UT News</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span>2026</span>
+              <span class="dot" aria-hidden="true"></span>
+              <span>Award</span>
+            </div>
+            <h2 id="press-h">New Venture Expo Showcases Student and Incubator Businesses</h2>
+            <p class="excerpt">Cold9 took 1st place in the &ldquo;prototype&rdquo; category at the University of Tampa&rsquo;s New Venture Expo, earning $3,000 to help bring the first insulated baseball pant to market. Founders Spencer Walden &rsquo;29, Sam Levine &rsquo;29, and Joshua Greenspon &rsquo;28 were among 73 ventures featured at the annual event in the Lowth Entrepreneurship Center.</p>
+            <span class="press-cta">
+              Read on UT.edu
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- More articles will be added here as they're published -->
+
+        <div class="press-coming">
+          More coverage coming soon &mdash; <a href="contact.html">media inquiries &rarr;</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer class="about-footer">
+    <div class="about-footer-inner">
+      <a href="index.html" class="logo">Cold<span class="nine">9</span>&reg;</a>
+      <span>&copy; 2026 Cold9 Athletics &middot; Never Freeze Again&trade;</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var reveals = document.querySelectorAll('.reveal');
+      if (reduced) {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      } else if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('visible'); });
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var badge = document.getElementById('nav-cart-badge');
+      if (!badge) return;
+      try {
+        var cart = JSON.parse(localStorage.getItem('cold9_cart') || '[]');
+        var count = cart.reduce(function (s, i) { return s + (i.qty || 1); }, 0);
+        badge.textContent = count > 0 ? count : '';
+      } catch (e) { badge.textContent = ''; }
+    })();
+  </script>
+
+</body>
+</html>
